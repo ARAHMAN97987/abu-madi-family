@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تواصل معنا | آل أبو ماضي / الماضي</title>
+  <meta name="description" content="تواصل مع مشروع توثيق عائلة أبو ماضي / الماضي لإرسال وثيقة أو شهادة أو تصحيح.">
+  <meta name="theme-color" content="#F5F0E8">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_AR">
+  <meta property="og:title" content="تواصل معنا | آل أبو ماضي / الماضي">
+  <meta property="og:description" content="أرسل وثيقة، شهادة، تصحيح، أو إضافة لمشروع توثيق عائلة أبو ماضي / الماضي.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%238B6F47'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<nav class="nav" aria-label="التنقل الرئيسي">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">آل أبو ماضي</a>
+    <button class="nav__toggle" type="button" aria-label="فتح القائمة" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+    <ul class="nav__list">
+      <li><a href="index.html" class="nav__link">الرئيسية</a></li>
+      <li><a href="index.html#about" class="nav__link">عن العائلة</a></li>
+      <li><a href="index.html#document" class="nav__link">الوثيقة</a></li>
+      <li><a href="index.html#tree" class="nav__link">الشجرة</a></li>
+      <li><a href="index.html#sources" class="nav__link">المصادر</a></li>
+      <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="container">
+    <header class="page__header">
+      <h1 class="page__title">تواصل معنا</h1>
+      <p class="page__intro">هذه الصفحة مخصصة لأفراد العائلة، الأقارب، الباحثين، وكل من يملك تصحيحًا، وثيقة، صورة، شهادة، أو إضافة يمكن أن تساعد في توثيق تاريخ العائلة بدقة أكبر.</p>
+    </header>
+
+    <form class="contact-form" action="https://formspree.io/f/REPLACE_WITH_FORMSPREE_ID" method="POST" novalidate>
+      <div class="form-field">
+        <label for="name">الاسم</label>
+        <input type="text" id="name" name="name" required autocomplete="name">
+      </div>
+      <div class="form-field">
+        <label for="email">البريد الإلكتروني</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label for="relation">صلة القرابة إن وجدت</label>
+        <input type="text" id="relation" name="relation">
+      </div>
+      <div class="form-field">
+        <label for="message">الرسالة</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <button type="submit" class="btn btn--primary btn--block">إرسال</button>
+      <div class="form-message form-message--success" role="status">تم استلام رسالتك، شكرًا لمساهمتك.</div>
+      <div class="form-message form-message--error" role="alert">تعذر الإرسال، حاول مرة أخرى.</div>
+    </form>
+  </div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer__inner">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">آل أبو ماضي / الماضي</div>
+        <p class="footer__tagline">الذاكرة تحفظ الجذور.</p>
+      </div>
+      <div class="footer__col">
+        <h3>روابط سريعة</h3>
+        <ul class="footer__links">
+          <li><a href="index.html#document">الوثيقة</a></li>
+          <li><a href="index.html#sources">المصادر</a></li>
+          <li><a href="contact.html">تواصل معنا</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h3>آخر تحديث</h3>
+        <p class="footer__tagline"><span data-current-year>2026</span></p>
+      </div>
+    </div>
+    <hr class="footer__divider">
+    <div class="footer__bottom">
+      <p>© جميع الحقوق محفوظة لعائلة أبو ماضي / الماضي</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "آل أبو ماضي / الماضي",
+  "short_name": "أبو ماضي",
+  "description": "موقع يوثق تاريخ عائلة أبو ماضي / الماضي من الطنطورة وإجزم.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5F0E8",
+  "theme_color": "#8B6F47",
+  "icons": [
+    {
+      "src": "assets/images/tantura-poster.jpg",
+      "sizes": "any",
+      "type": "image/jpeg"
+    }
+  ]
+}
