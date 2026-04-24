@@ -1668,6 +1668,39 @@ strong {
   transition: stroke 200ms ease, opacity 200ms ease;
 }
 
+.tree-node__toggle-group {
+  cursor: pointer;
+}
+
+.tree-node__toggle-bg {
+  fill: var(--color-surface);
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  transition: fill 150ms ease;
+}
+
+.tree-node__toggle-group:hover .tree-node__toggle-bg {
+  fill: var(--color-accent);
+}
+
+.tree-node__toggle {
+  fill: var(--color-accent);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--font-family);
+  pointer-events: none;
+  user-select: none;
+  transition: fill 150ms ease;
+}
+
+.tree-node__toggle-group:hover .tree-node__toggle {
+  fill: #FFFFFF;
+}
+
+.tree-node--collapsed rect {
+  filter: brightness(0.95);
+}
+
 .tree-link--filtered-out {
   opacity: 0.15;
 }
