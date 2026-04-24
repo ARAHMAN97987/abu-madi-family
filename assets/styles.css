@@ -663,6 +663,32 @@ strong {
   transform: translateY(-2px);
 }
 
+.card--link {
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+
+.card--link:hover {
+  color: inherit;
+  border-color: var(--color-accent);
+}
+
+.card--link::after {
+  content: '←';
+  position: absolute;
+  top: var(--space-3);
+  inset-inline-start: var(--space-3);
+  color: var(--color-accent);
+  opacity: 0;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.card--link:hover::after {
+  opacity: 1;
+  transform: translateX(-3px);
+}
+
 .card__icon {
   color: var(--color-accent);
   margin-block-end: var(--space-4);
