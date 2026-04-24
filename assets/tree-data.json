@@ -83,7 +83,8 @@
                         "death": "",
                         "location": "كندا",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "6"
                       },
                       {
                         "id": "22",
@@ -98,9 +99,11 @@
                         "death": "",
                         "location": "دمشق",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "6"
                       }
-                    ]
+                    ],
+                    "parentId": "4"
                   },
                   {
                     "id": "7",
@@ -129,7 +132,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "7"
                       },
                       {
                         "id": "24",
@@ -144,7 +148,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "7"
                       },
                       {
                         "id": "25",
@@ -159,7 +164,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "7"
                       },
                       {
                         "id": "26",
@@ -174,9 +180,11 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "7"
                       }
-                    ]
+                    ],
+                    "parentId": "4"
                   },
                   {
                     "id": "8",
@@ -205,9 +213,11 @@
                         "death": "",
                         "location": "دمشق",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "8"
                       }
-                    ]
+                    ],
+                    "parentId": "4"
                   },
                   {
                     "id": "9",
@@ -236,7 +246,8 @@
                         "death": "",
                         "location": "الخبر، السعودية",
                         "notes": "لديها أبناء عبدالرحمن وإبراهيم و غيث",
-                        "children": []
+                        "children": [],
+                        "parentId": "9"
                       },
                       {
                         "id": "29",
@@ -251,7 +262,26 @@
                         "death": "",
                         "location": "الخبر، السعودية",
                         "notes": "",
-                        "children": []
+                        "children": [
+                          {
+                            "id": "49",
+                            "name": "احمد للللل",
+                            "gen": "5",
+                            "branch": "وصفي",
+                            "father": "عبدالرحمن وسيم أبو ماضي",
+                            "mother": "اسيل",
+                            "spouse": "",
+                            "relation": "",
+                            "birth": "",
+                            "death": "",
+                            "location": "",
+                            "occupation": "",
+                            "notes": "",
+                            "parentId": "29",
+                            "children": []
+                          }
+                        ],
+                        "parentId": "9"
                       },
                       {
                         "id": "30",
@@ -266,7 +296,8 @@
                         "death": "",
                         "location": "الخبر، السعودية",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "9"
                       },
                       {
                         "id": "31",
@@ -281,7 +312,8 @@
                         "death": "",
                         "location": "الخبر، السعودية",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "9"
                       },
                       {
                         "id": "32",
@@ -296,7 +328,8 @@
                         "death": "",
                         "location": "الخبر، السعودية",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "9"
                       },
                       {
                         "id": "33",
@@ -311,9 +344,11 @@
                         "death": "",
                         "location": "الخبر، السعودية",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "9"
                       }
-                    ]
+                    ],
+                    "parentId": "4"
                   },
                   {
                     "id": "10",
@@ -342,7 +377,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "10"
                       },
                       {
                         "id": "35",
@@ -357,7 +393,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "10"
                       },
                       {
                         "id": "36",
@@ -372,7 +409,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "10"
                       },
                       {
                         "id": "37",
@@ -387,7 +425,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "10"
                       },
                       {
                         "id": "38",
@@ -402,7 +441,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "10"
                       },
                       {
                         "id": "39",
@@ -417,7 +457,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "10"
                       },
                       {
                         "id": "40",
@@ -432,9 +473,11 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "10"
                       }
-                    ]
+                    ],
+                    "parentId": "4"
                   },
                   {
                     "id": "11",
@@ -463,7 +506,8 @@
                         "death": "",
                         "location": "هولندا",
                         "notes": "من زواج سهير الأول ، أولاده شام محمد طارق ..",
-                        "children": []
+                        "children": [],
+                        "parentId": "11"
                       },
                       {
                         "id": "42",
@@ -478,7 +522,8 @@
                         "death": "",
                         "location": "هولندا",
                         "notes": "من زواج سهير الأول، أولادها هادي يامن سيدرا ..",
-                        "children": []
+                        "children": [],
+                        "parentId": "11"
                       },
                       {
                         "id": "43",
@@ -493,7 +538,8 @@
                         "death": "",
                         "location": "هولندا",
                         "notes": "من زواج سهير الأول",
-                        "children": []
+                        "children": [],
+                        "parentId": "11"
                       },
                       {
                         "id": "44",
@@ -508,9 +554,11 @@
                         "death": "",
                         "location": "هولندا",
                         "notes": "من زواج سهير الأول",
-                        "children": []
+                        "children": [],
+                        "parentId": "11"
                       }
-                    ]
+                    ],
+                    "parentId": "4"
                   },
                   {
                     "id": "12",
@@ -539,7 +587,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "يعمل في الشركات الاستشارية السعودية",
-                        "children": []
+                        "children": [],
+                        "parentId": "12"
                       },
                       {
                         "id": "46",
@@ -554,7 +603,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "يعمل في الشركات الاستشارية السعودية",
-                        "children": []
+                        "children": [],
+                        "parentId": "12"
                       },
                       {
                         "id": "47",
@@ -569,7 +619,8 @@
                         "death": "",
                         "location": "الرياض",
                         "notes": "يعمل في الشركات الاستشارية السعودية",
-                        "children": []
+                        "children": [],
+                        "parentId": "12"
                       },
                       {
                         "id": "48",
@@ -584,13 +635,17 @@
                         "death": "",
                         "location": "الخبر، السعودية",
                         "notes": "",
-                        "children": []
+                        "children": [],
+                        "parentId": "12"
                       }
-                    ]
+                    ],
+                    "parentId": "4"
                   }
-                ]
+                ],
+                "parentId": "2"
               }
-            ]
+            ],
+            "parentId": "1"
           },
           {
             "id": "3",
@@ -633,7 +688,8 @@
                     "death": "2025",
                     "location": "طولكرم",
                     "notes": "استشهد/توفي في طولكرم عام 2025م",
-                    "children": []
+                    "children": [],
+                    "parentId": "5"
                   },
                   {
                     "id": "14",
@@ -648,7 +704,8 @@
                     "death": "",
                     "location": "الطيبة، فلسطين",
                     "notes": "",
-                    "children": []
+                    "children": [],
+                    "parentId": "5"
                   },
                   {
                     "id": "15",
@@ -663,7 +720,8 @@
                     "death": "",
                     "location": "طولكرم",
                     "notes": "",
-                    "children": []
+                    "children": [],
+                    "parentId": "5"
                   },
                   {
                     "id": "16",
@@ -678,7 +736,8 @@
                     "death": "",
                     "location": "غزة",
                     "notes": "متزوجة في غزة",
-                    "children": []
+                    "children": [],
+                    "parentId": "5"
                   },
                   {
                     "id": "17",
@@ -693,7 +752,8 @@
                     "death": "",
                     "location": "طولكرم",
                     "notes": "",
-                    "children": []
+                    "children": [],
+                    "parentId": "5"
                   },
                   {
                     "id": "18",
@@ -708,7 +768,8 @@
                     "death": "",
                     "location": "الخبر، السعودية",
                     "notes": "متزوجة من ابن عمها وسيم وصفي",
-                    "children": []
+                    "children": [],
+                    "parentId": "5"
                   },
                   {
                     "id": "19",
@@ -723,7 +784,8 @@
                     "death": "",
                     "location": "طولكرم",
                     "notes": "",
-                    "children": []
+                    "children": [],
+                    "parentId": "5"
                   },
                   {
                     "id": "20",
@@ -738,15 +800,20 @@
                     "death": "",
                     "location": "طولكرم",
                     "notes": "يعيش مع أمه وأخته آمنة",
-                    "children": []
+                    "children": [],
+                    "parentId": "5"
                   }
-                ]
+                ],
+                "parentId": "3"
               }
-            ]
+            ],
+            "parentId": "1"
           }
-        ]
+        ],
+        "parentId": "0"
       }
-    ]
+    ],
+    "parentId": null
   },
   "relationships": [
     {
