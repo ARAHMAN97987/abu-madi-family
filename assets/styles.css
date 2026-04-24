@@ -370,13 +370,12 @@ strong {
 
 .hero {
   position: relative;
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-block: var(--space-24) var(--space-16);
+  padding-block: calc(var(--nav-height-desktop) + var(--space-16)) var(--space-16);
   padding-inline: var(--space-6);
-  margin-top: var(--nav-height-desktop);
   overflow: hidden;
 }
 
@@ -1309,8 +1308,8 @@ strong {
   }
 
   .hero {
-    margin-top: var(--nav-height-mobile);
-    min-height: 85vh;
+    min-height: 100vh;
+    padding-top: calc(var(--nav-height-mobile) + var(--space-8));
   }
 
   .section {
