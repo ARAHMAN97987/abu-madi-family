@@ -262,25 +262,7 @@
                         "death": "",
                         "location": "الخبر، السعودية",
                         "notes": "",
-                        "children": [
-                          {
-                            "id": "49",
-                            "name": "احمد للللل",
-                            "gen": "5",
-                            "branch": "وصفي",
-                            "father": "عبدالرحمن وسيم أبو ماضي",
-                            "mother": "اسيل",
-                            "spouse": "",
-                            "relation": "",
-                            "birth": "",
-                            "death": "",
-                            "location": "",
-                            "occupation": "",
-                            "notes": "",
-                            "parentId": "29",
-                            "children": []
-                          }
-                        ],
+                        "children": [],
                         "parentId": "9"
                       },
                       {
@@ -491,7 +473,7 @@
                     "birth": "",
                     "death": "",
                     "location": "أمريكا ولاية اتلانتا",
-                    "notes": "تطلقت من زوجها الأول وتزوجت من ابن عم وصفي",
+                    "notes": "انفصلت من زوجها الأول وتزوجت من ابن عم وصفي ، عقاب مرشد ابوماضي",
                     "children": [
                       {
                         "id": "41",
@@ -558,7 +540,8 @@
                         "parentId": "11"
                       }
                     ],
-                    "parentId": "4"
+                    "parentId": "4",
+                    "occupation": ""
                   },
                   {
                     "id": "12",
