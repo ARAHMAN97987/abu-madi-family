@@ -4,7 +4,10 @@
   const PASSWORD_HASH = 'be445900238a9911b81e5bed79670712936c885dde69d869bf829d09187503ba';
   const STORAGE_KEY = 'abumadi_tree_data_v2';
   const SESSION_KEY = 'abumadi_admin_session';
+  const PAT_KEY = 'abumadi_github_pat';
   const DATA_URL = 'assets/tree-data.json';
+  const GITHUB_REPO = 'ARAHMAN97987/abu-madi-family';
+  const GITHUB_PATH = 'assets/tree-data.json';
 
   let state = { schema_version: 2, tree: null, relationships: [] };
   let editingPersonId = null;
@@ -22,13 +25,22 @@
 
   async function handleAuth(e) {
     e.preventDefault();
-    const pwd = document.getElementById('auth-pwd').value;
-    const hash = await sha256(pwd);
-    if (hash === PASSWORD_HASH) {
-      sessionStorage.setItem(SESSION_KEY, '1');
-      enterDashboard();
-    } else {
-      document.getElementById('auth-error').hidden = false;
+    const errorEl = document.getElementById('auth-error');
+    errorEl.hidden = true;
+    const pwd = document.getElementById('auth-pwd').value.trim();
+    try {
+      const hash = await sha256(pwd);
+      if (hash === PASSWORD_HASH) {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        await enterDashboard();
+      } else {
+        errorEl.textContent = 'كلمة السر غير صحيحة.';
+        errorEl.hidden = false;
+      }
+    } catch (err) {
+      console.error(err);
+      errorEl.textContent = 'خطأ: ' + err.message;
+      errorEl.hidden = false;
     }
   }
 
@@ -115,6 +127,10 @@
     document.getElementById('btn-import').addEventListener('click', () => document.getElementById('file-import').click());
     document.getElementById('file-import').addEventListener('change', importJson);
     document.getElementById('btn-reset').addEventListener('click', resetToOriginal);
+    document.getElementById('btn-publish').addEventListener('click', publishToGithub);
+    document.getElementById('btn-pat-setup').addEventListener('click', openPatModal);
+    document.getElementById('pat-form').addEventListener('submit', savePat);
+    document.getElementById('btn-pat-clear').addEventListener('click', clearPat);
     document.getElementById('people-search').addEventListener('input', renderPeople);
 
     document.getElementById('person-form').addEventListener('submit', savePerson);
@@ -392,6 +408,99 @@
     if (!state.relationships) state.relationships = [];
     render();
     notify('تمت الاستعادة من GitHub.');
+  }
+
+  // === GitHub publishing ===
+  function openPatModal() {
+    const status = document.getElementById('pat-status');
+    const input = document.getElementById('pat-input');
+    if (localStorage.getItem(PAT_KEY)) {
+      status.textContent = 'التوكن محفوظ. الصق توكنًا جديدًا لاستبداله.';
+      status.className = 'pat-status pat-status--ok';
+    } else {
+      status.textContent = 'لا يوجد توكن محفوظ.';
+      status.className = 'pat-status';
+    }
+    input.value = '';
+    document.getElementById('pat-modal').hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function savePat(e) {
+    e.preventDefault();
+    const v = document.getElementById('pat-input').value.trim();
+    if (!v) return;
+    localStorage.setItem(PAT_KEY, v);
+    notify('تم حفظ التوكن. اضغط "نشر التغييرات للموقع" لتفعيل النشر التلقائي.');
+    closeModals();
+  }
+
+  function clearPat() {
+    if (!confirm('حذف التوكن؟')) return;
+    localStorage.removeItem(PAT_KEY);
+    notify('تم حذف التوكن.');
+    closeModals();
+  }
+
+  async function publishToGithub() {
+    const pat = localStorage.getItem(PAT_KEY);
+    if (!pat) {
+      alert('لم يتم إعداد التوكن بعد. اضغط "إعداد التوكن" أولاً.');
+      openPatModal();
+      return;
+    }
+    const btn = document.getElementById('btn-publish');
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'جارٍ النشر...';
+    try {
+      // 1) GET current file SHA
+      const apiBase = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_PATH}`;
+      const headers = {
+        'Authorization': `Bearer ${pat}`,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      };
+      const getRes = await fetch(apiBase + '?ref=main', { headers, cache: 'no-store' });
+      if (!getRes.ok) {
+        const txt = await getRes.text();
+        throw new Error(`فشل قراءة الملف (${getRes.status}): ${txt.slice(0, 120)}`);
+      }
+      const current = await getRes.json();
+      // 2) PUT new content
+      const json = JSON.stringify(state, null, 2);
+      const b64 = b64encodeUtf8(json);
+      const putRes = await fetch(apiBase, {
+        method: 'PUT',
+        headers: Object.assign({}, headers, { 'Content-Type': 'application/json' }),
+        body: JSON.stringify({
+          message: 'Update tree data via dashboard',
+          content: b64,
+          sha: current.sha,
+          branch: 'main',
+        }),
+      });
+      if (!putRes.ok) {
+        const err = await putRes.json().catch(() => ({}));
+        throw new Error(`فشل النشر (${putRes.status}): ${err.message || 'خطأ غير معروف'}`);
+      }
+      const result = await putRes.json();
+      notify('✓ تم النشر! ستظهر التحديثات للزوار خلال 1–2 دقيقة.');
+      console.log('Commit:', result.commit && result.commit.html_url);
+    } catch (err) {
+      alert('فشل النشر: ' + err.message);
+      console.error(err);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  }
+
+  function b64encodeUtf8(str) {
+    const bytes = new TextEncoder().encode(str);
+    let bin = '';
+    for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
   }
 
   function esc(s) {

@@ -1778,6 +1778,12 @@ strong {
   z-index: 100;
 }
 
+.auth-gate[hidden],
+.dashboard[hidden],
+.modal[hidden] {
+  display: none !important;
+}
+
 .auth-gate__box {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -2056,6 +2062,32 @@ strong {
 
 .required {
   color: var(--color-error);
+}
+
+.pat-steps {
+  font-size: var(--font-size-small);
+  line-height: 1.9;
+  color: var(--color-text-secondary);
+  padding-inline-start: var(--space-6);
+  margin-block: var(--space-4) var(--space-6);
+}
+
+.pat-steps code {
+  background: var(--color-surface-alt);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+}
+
+.pat-status {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  margin-block-start: var(--space-1);
+  display: block;
+}
+
+.pat-status--ok {
+  color: var(--color-success);
 }
 
 @media (max-width: 767px) {
