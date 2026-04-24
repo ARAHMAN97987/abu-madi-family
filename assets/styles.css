@@ -370,11 +370,18 @@ strong {
 
 .hero {
   position: relative;
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background-color: #1c1410;
+  background-image: url('images/tantura-poster.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
 }
 
 .hero__content {
@@ -410,17 +417,29 @@ strong {
 
 .hero__bg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
+  overflow: hidden;
 }
 
 .hero__video {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
   width: 100%;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   object-fit: cover;
   object-position: center 30%;
+  transform: translate(-50%, -50%);
+  display: block;
+  background-color: #1c1410;
 }
 
 .hero__img {
@@ -431,21 +450,8 @@ strong {
   filter: grayscale(100%) contrast(1.05);
 }
 
-.hero__poster {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  z-index: 1;
-  transition: opacity 1s ease;
-}
-
-.hero__poster.loaded {
-  opacity: 0;
-  pointer-events: none;
-}
+/* Legacy poster kept for safety; not used since video uses native poster attr */
+.hero__poster { display: none; }
 
 .hero__overlay {
   position: absolute;
@@ -1414,7 +1420,8 @@ strong {
   }
 
   .hero {
-    min-height: 100vh;
+    height: 100vh;
+    min-height: 500px;
   }
 
   .hero__content {

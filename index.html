@@ -84,12 +84,10 @@
 
   <!-- Hero with video background -->
   <section class="hero" id="top" aria-labelledby="hero-title">
-    <div class="hero__bg">
-      <!-- v2: Video background with poster fallback -->
-      <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <div class="hero__bg" aria-hidden="true">
+      <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="assets/images/tantura-poster.jpg">
         <source src="assets/images/tantura-hero.mp4" type="video/mp4">
       </video>
-      <img src="assets/images/tantura-poster.jpg" alt="" class="hero__poster" aria-hidden="true">
       <div class="hero__overlay"></div>
     </div>
     <p class="hero__caption">لقطات حديثة من شواطئ الطنطورة المحتلة</p>
