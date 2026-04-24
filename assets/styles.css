@@ -789,6 +789,16 @@ strong {
   scroll-margin-top: 100px;
 }
 
+.document__cta {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-block-start: var(--space-12);
+  padding-block-start: var(--space-8);
+  border-top: 1px solid var(--color-border);
+}
+
 .cross-link {
   text-align: center;
   font-size: var(--font-size-small);
