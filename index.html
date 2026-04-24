@@ -37,7 +37,7 @@
   <!-- Fonts: preconnect + display swap -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Preload hero poster for LCP -->
   <link rel="preload" as="image" href="assets/images/tantura-poster.jpg">
@@ -71,7 +71,6 @@
       <li><a href="#top" class="nav__link">الرئيسية</a></li>
       <li><a href="#about" class="nav__link">عن العائلة</a></li>
       <li><a href="#document" class="nav__link">الوثيقة</a></li>
-      <li><a href="#tree" class="nav__link">الشجرة</a></li>
       <li><a href="#sources" class="nav__link">المصادر</a></li>
       <li><a href="#contact" class="nav__link">تواصل معنا</a></li>
     </ul>
@@ -137,7 +136,7 @@
         <p class="card__description">أسماء محفوظة من جيل النكبة وذاكرة الطنطورة واللجوء.</p>
       </article>
 
-      <article class="card reveal reveal--card">
+      <article class="card reveal reveal--card" style="display:none">
         <svg class="card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="4" r="2"></circle>
           <circle cx="6" cy="14" r="2"></circle>
@@ -252,18 +251,6 @@
       <div style="text-align: center;" class="reveal">
         <a href="expanded.html" class="btn btn--primary">اقرأ النسخة</a>
       </div>
-    </div>
-  </section>
-
-  <!-- Family Tree -->
-  <section class="section family-tree" id="tree" aria-labelledby="tree-title">
-    <div class="container">
-      <h2 class="section-heading reveal" id="tree-title">شجرة العائلة</h2>
-      <hr class="section-divider" aria-hidden="true">
-      <div class="family-tree__image-wrapper reveal">
-        <img src="assets/images/family-tree.webp" alt="شجرة عائلات الطنطورة، صورة جامعة لكل عائلات الطنطورة" class="family-tree__image" data-lightbox loading="lazy">
-      </div>
-      <p class="family-tree__note reveal">شجرة عائلات الطنطورة، صورة جامعة لكل عائلات القرية قبل النكبة. اضغط للتكبير.</p>
     </div>
   </section>
 
