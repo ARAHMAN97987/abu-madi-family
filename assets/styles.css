@@ -716,6 +716,35 @@ strong {
   transform: scale(1.01);
 }
 
+.document__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.document__pair img {
+  width: 100%;
+  height: auto;
+  max-width: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  filter: sepia(30%) contrast(1.05);
+  cursor: zoom-in;
+  transition: filter var(--transition-normal);
+}
+
+.document__pair img:hover {
+  filter: sepia(20%) contrast(1.08);
+}
+
+@media (max-width: 767px) {
+  .document__pair {
+    grid-template-columns: 1fr;
+  }
+}
+
 .document__figure figcaption {
   font-size: var(--font-size-caption);
   color: var(--color-text-secondary);
