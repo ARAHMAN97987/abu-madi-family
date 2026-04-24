@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الشجرة | آل أبو ماضي</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#F5F0E8">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%238B6F47'/%3E%3C/svg%3E">
+</head>
+<body class="dashboard-page">
+
+<div class="auth-gate" id="auth-gate">
+  <div class="auth-gate__box">
+    <h1>إدارة الشجرة</h1>
+    <p>هذه الصفحة محمية بكلمة سر. أدخلها للمتابعة.</p>
+    <form id="auth-form">
+      <input type="password" id="auth-pwd" placeholder="كلمة السر" autocomplete="current-password" required>
+      <button type="submit" class="btn btn--primary">دخول</button>
+      <p class="auth-error" id="auth-error" hidden>كلمة السر غير صحيحة.</p>
+    </form>
+    <p class="auth-back"><a href="tree.html">← العودة للشجرة</a></p>
+  </div>
+</div>
+
+<main class="dashboard" id="dashboard" hidden>
+  <header class="dashboard__header">
+    <div>
+      <h1>إدارة شجرة العائلة</h1>
+      <p class="dashboard__subtitle">أضف، عدّل، احذف الأفراد والعلاقات. التعديلات تُحفظ محلياً حتى تصدّرها.</p>
+    </div>
+    <div class="dashboard__actions">
+      <button type="button" class="btn btn--secondary" id="btn-import">استيراد JSON</button>
+      <input type="file" id="file-import" accept=".json" hidden>
+      <button type="button" class="btn btn--primary" id="btn-export">تصدير JSON</button>
+      <button type="button" class="btn btn--secondary" id="btn-reset">إعادة للأصل</button>
+      <a href="tree.html" class="btn btn--secondary">عرض الشجرة</a>
+    </div>
+  </header>
+
+  <div class="dashboard__notice" id="dashboard-notice" hidden></div>
+
+  <section class="dashboard__section">
+    <header class="dashboard__section-header">
+      <h2>الأفراد <span class="counter" id="people-count">0</span></h2>
+      <div class="dashboard__section-actions">
+        <input type="search" id="people-search" placeholder="بحث بالاسم...">
+        <button type="button" class="btn btn--primary" id="btn-add-person">+ إضافة فرد</button>
+      </div>
+    </header>
+    <div class="table-wrap">
+      <table class="data-table" id="people-table">
+        <thead>
+          <tr>
+            <th>الاسم</th>
+            <th>الجيل</th>
+            <th>الفرع</th>
+            <th>الأب</th>
+            <th>الأم</th>
+            <th>الزوج/ة</th>
+            <th>الميلاد</th>
+            <th>الوفاة</th>
+            <th>السكن</th>
+            <th>الوظيفة</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="people-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="dashboard__section">
+    <header class="dashboard__section-header">
+      <h2>العلاقات الخاصة <span class="counter" id="rel-count">0</span></h2>
+      <button type="button" class="btn btn--primary" id="btn-add-rel">+ إضافة علاقة</button>
+    </header>
+    <p class="dashboard__hint">العلاقات الخاصة (مثل زواج داخلي، صلة قرابة) تظهر في الشجرة كخطوط منقطة بين الفردين.</p>
+    <div class="table-wrap">
+      <table class="data-table" id="rel-table">
+        <thead>
+          <tr>
+            <th>الفرد الأول</th>
+            <th>الفرد الثاني</th>
+            <th>نوع العلاقة</th>
+            <th>الوصف</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="rel-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<!-- Person edit modal -->
+<div class="modal" id="person-modal" role="dialog" aria-modal="true" hidden>
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__content modal__content--wide">
+    <button type="button" class="modal__close" data-modal-close>×</button>
+    <h2 class="modal__name" id="person-modal-title">إضافة فرد</h2>
+    <form class="form-grid" id="person-form">
+      <div class="form-grid__field form-grid__field--full">
+        <label for="p-name">الاسم الكامل <span class="required">*</span></label>
+        <input type="text" id="p-name" required>
+      </div>
+      <div class="form-grid__field">
+        <label for="p-gen">الجيل</label>
+        <select id="p-gen">
+          <option value="">—</option>
+          <option value="0">الجد الأكبر</option>
+          <option value="1">الجد المشترك</option>
+          <option value="2">الجيل الثاني</option>
+          <option value="3">الجيل الثالث</option>
+          <option value="4">الجيل الرابع</option>
+          <option value="5">الجيل الخامس</option>
+          <option value="6">الجيل السادس</option>
+        </select>
+      </div>
+      <div class="form-grid__field">
+        <label for="p-branch">الفرع</label>
+        <select id="p-branch">
+          <option value="">—</option>
+          <option value="الجد الأكبر">الجد الأكبر</option>
+          <option value="الجد المشترك">الجد المشترك</option>
+          <option value="وصفي">فرع وصفي</option>
+          <option value="عمر وحيد">فرع عمر وحيد</option>
+        </select>
+      </div>
+      <div class="form-grid__field">
+        <label for="p-father">الأب (اختر من القائمة)</label>
+        <select id="p-father"><option value="">—</option></select>
+      </div>
+      <div class="form-grid__field">
+        <label for="p-mother">الأم</label>
+        <input type="text" id="p-mother" placeholder="اسم الأم (اختياري)">
+      </div>
+      <div class="form-grid__field">
+        <label for="p-spouse">الزوج/الزوجة</label>
+        <input type="text" id="p-spouse" placeholder="(اختياري)">
+      </div>
+      <div class="form-grid__field">
+        <label for="p-relation">العلاقة (ابن/بنت/أب/أم...)</label>
+        <input type="text" id="p-relation" placeholder="(اختياري)">
+      </div>
+      <div class="form-grid__field">
+        <label for="p-birth">سنة الميلاد</label>
+        <input type="text" id="p-birth" placeholder="مثال: 1948">
+      </div>
+      <div class="form-grid__field">
+        <label for="p-death">سنة الوفاة</label>
+        <input type="text" id="p-death" placeholder="(إن وُجدت)">
+      </div>
+      <div class="form-grid__field">
+        <label for="p-location">مكان الإقامة</label>
+        <input type="text" id="p-location">
+      </div>
+      <div class="form-grid__field">
+        <label for="p-occupation">الوظيفة</label>
+        <input type="text" id="p-occupation">
+      </div>
+      <div class="form-grid__field form-grid__field--full">
+        <label for="p-notes">ملاحظات</label>
+        <textarea id="p-notes" rows="3"></textarea>
+      </div>
+      <div class="form-grid__actions">
+        <button type="button" class="btn btn--secondary" data-modal-close>إلغاء</button>
+        <button type="submit" class="btn btn--primary">حفظ</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Relationship modal -->
+<div class="modal" id="rel-modal" role="dialog" aria-modal="true" hidden>
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__content">
+    <button type="button" class="modal__close" data-modal-close>×</button>
+    <h2 class="modal__name" id="rel-modal-title">إضافة علاقة</h2>
+    <form class="form-grid" id="rel-form">
+      <div class="form-grid__field form-grid__field--full">
+        <label for="r-from">الفرد الأول <span class="required">*</span></label>
+        <select id="r-from" required></select>
+      </div>
+      <div class="form-grid__field form-grid__field--full">
+        <label for="r-to">الفرد الثاني <span class="required">*</span></label>
+        <select id="r-to" required></select>
+      </div>
+      <div class="form-grid__field form-grid__field--full">
+        <label for="r-type">نوع العلاقة <span class="required">*</span></label>
+        <input type="text" id="r-type" placeholder="مثال: زواج داخلي، صلة قرابة، تكفل" required>
+      </div>
+      <div class="form-grid__field form-grid__field--full">
+        <label for="r-desc">الوصف</label>
+        <textarea id="r-desc" rows="3" placeholder="تفاصيل إضافية (اختياري)"></textarea>
+      </div>
+      <div class="form-grid__actions">
+        <button type="button" class="btn btn--secondary" data-modal-close>إلغاء</button>
+        <button type="submit" class="btn btn--primary">حفظ</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="assets/dashboard.js"></script>
+</body>
+</html>

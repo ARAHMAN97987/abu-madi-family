@@ -17,11 +17,21 @@
   function colorFor(d) { return branchColors[d.data.branch] || '#8B6F47'; }
   function isExternal(d) { return /العشماوي/.test(d.data.name); }
 
-  let rootData, root, svg, g, zoomBehavior, nodeIdCounter = 0;
+  const STORAGE_KEY = 'abumadi_tree_data_v2';
+
+  let rootData, root, svg, g, gRels, zoomBehavior, nodeIdCounter = 0;
+  let relationships = [];
   let activeBranch = 'all';
 
-  d3.json('assets/tree-data.json').then(function (data) {
-    rootData = data;
+  loadData().then(function (data) {
+    // Support both legacy (tree only) and new wrapped format
+    if (data.tree) {
+      rootData = data.tree;
+      relationships = data.relationships || [];
+    } else {
+      rootData = data;
+      relationships = [];
+    }
     root = d3.hierarchy(rootData);
     root.x0 = 0; root.y0 = 0;
 
@@ -46,6 +56,14 @@
     document.querySelector('.tree-loading').textContent = 'تعذّر تحميل الشجرة. حاول تحديث الصفحة.';
   });
 
+  async function loadData() {
+    const cached = localStorage.getItem(STORAGE_KEY);
+    if (cached) {
+      try { return JSON.parse(cached); } catch (e) { /* ignore */ }
+    }
+    return d3.json('assets/tree-data.json?t=' + Date.now());
+  }
+
   function initSVG() {
     const container = document.getElementById('tree-container');
     const width = container.clientWidth;
@@ -58,6 +76,7 @@
 
     svg.selectAll('*').remove();
     g = svg.append('g').attr('class', 'tree-g');
+    gRels = g.append('g').attr('class', 'tree-relationships');
 
     zoomBehavior = d3.zoom()
       .scaleExtent([0.3, 2])
@@ -199,11 +218,63 @@
 
     nodes.forEach(function (d) { d.x0 = d._x; d.y0 = d._y; });
 
+    drawRelationships(nodes);
+
     // First-time center
     if (!update.centered) {
       update.centered = true;
       setTimeout(function () { centerOnRoot(); }, DURATION + 50);
     }
+  }
+
+  function drawRelationships(visibleNodes) {
+    const byId = {};
+    visibleNodes.forEach(n => { byId[n.data.id] = n; });
+
+    const visibleRels = relationships.filter(r => byId[r.from] && byId[r.to]);
+
+    const sel = gRels.selectAll('.rel-line').data(visibleRels, (d, i) => d.from + '-' + d.to + '-' + i);
+
+    const enter = sel.enter().append('path')
+      .attr('class', 'rel-line')
+      .attr('fill', 'none')
+      .style('cursor', 'pointer')
+      .on('click', function (event, d) {
+        event.stopPropagation();
+        showRelModal(d, byId);
+      });
+
+    enter.append('title').text(d => d.type + (d.description ? ' — ' + d.description : ''));
+
+    enter.merge(sel)
+      .transition().duration(DURATION)
+      .attr('d', function (d) {
+        const a = byId[d.from], b = byId[d.to];
+        const x1 = a._y, y1 = a._x, x2 = b._y, y2 = b._x;
+        const mx = (x1 + x2) / 2;
+        const my = (y1 + y2) / 2;
+        const offset = Math.abs(y2 - y1) / 4 + 30;
+        return `M ${x1} ${y1} Q ${mx} ${my + offset} ${x2} ${y2}`;
+      });
+
+    sel.exit().remove();
+  }
+
+  function showRelModal(rel, byId) {
+    const a = byId[rel.from], b = byId[rel.to];
+    const aName = a ? a.data.name : rel.from;
+    const bName = b ? b.data.name : rel.to;
+    document.getElementById('modal-name').textContent = rel.type;
+    document.getElementById('modal-subtitle').textContent = aName + ' ↔ ' + bName;
+    const dl = document.getElementById('modal-details');
+    dl.innerHTML = '';
+    if (rel.description) {
+      const dt = document.createElement('dt'); dt.textContent = 'التفاصيل';
+      const dd = document.createElement('dd'); dd.textContent = rel.description;
+      dl.appendChild(dt); dl.appendChild(dd);
+    }
+    document.getElementById('person-modal').hidden = false;
+    document.body.style.overflow = 'hidden';
   }
 
   function diagonal(d) {
