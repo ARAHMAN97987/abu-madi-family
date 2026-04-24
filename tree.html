@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شجرة العائلة | آل أبو ماضي / الماضي</title>
+  <meta name="description" content="شجرة عائلة آل أبو ماضي / الماضي - تفاعلية، تعرض الأجيال والفروع وأبناء كل فرع.">
+  <meta name="theme-color" content="#F5F0E8">
+
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ar_AR">
+  <meta property="og:title" content="شجرة عائلة آل أبو ماضي / الماضي">
+  <meta property="og:description" content="عرض تفاعلي لشجرة العائلة مع الأجيال والفروع.">
+  <meta property="og:image" content="assets/images/tantura-poster.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%238B6F47'/%3E%3C/svg%3E">
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body class="tree-page">
+
+<a href="#main-content" class="skip-link">تخطي إلى المحتوى</a>
+
+<nav class="nav" aria-label="التنقل الرئيسي">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">آل أبو ماضي</a>
+    <button class="nav__toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="nav-menu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+    <ul class="nav__list" id="nav-menu" role="list">
+      <li><a href="index.html" class="nav__link">الرئيسية</a></li>
+      <li><a href="index.html#about" class="nav__link">عن العائلة</a></li>
+      <li><a href="index.html#document" class="nav__link">الوثيقة</a></li>
+      <li><a href="tree.html" class="nav__link active">الشجرة</a></li>
+      <li><a href="index.html#sources" class="nav__link">المصادر</a></li>
+      <li><a href="index.html#contact" class="nav__link">تواصل معنا</a></li>
+    </ul>
+  </div>
+  <div class="nav__overlay" aria-hidden="true"></div>
+</nav>
+
+<main id="main-content" class="tree-main">
+  <header class="tree-header">
+    <h1>شجرة عائلة آل أبو ماضي</h1>
+    <p>الطنطورة وإجزم، قضاء حيفا — خمسة أجيال، فرعا وصفي وعمر وحيد.</p>
+  </header>
+
+  <div class="tree-toolbar">
+    <div class="tree-toolbar__group">
+      <label for="tree-search" class="visually-hidden">بحث</label>
+      <input type="search" id="tree-search" class="tree-search" placeholder="ابحث عن اسم..." autocomplete="off">
+    </div>
+    <div class="tree-toolbar__group">
+      <button type="button" class="tree-filter active" data-branch="all">الكل</button>
+      <button type="button" class="tree-filter" data-branch="وصفي">فرع وصفي</button>
+      <button type="button" class="tree-filter" data-branch="عمر وحيد">فرع عمر وحيد</button>
+    </div>
+    <div class="tree-toolbar__group">
+      <button type="button" class="tree-zoom" id="zoom-in" aria-label="تكبير">+</button>
+      <button type="button" class="tree-zoom" id="zoom-out" aria-label="تصغير">−</button>
+      <button type="button" class="tree-zoom" id="zoom-reset" aria-label="إعادة">↺</button>
+    </div>
+  </div>
+
+  <div class="tree-stats">
+    <span><strong id="stat-total">0</strong> فرد</span>
+    <span><strong id="stat-gens">5</strong> أجيال</span>
+    <span><strong id="stat-branches">2</strong> فرعان</span>
+  </div>
+
+  <div class="tree-container" id="tree-container">
+    <div class="tree-loading">جاري تحميل الشجرة...</div>
+    <svg class="tree-svg" aria-label="شجرة عائلة آل أبو ماضي"></svg>
+  </div>
+
+  <div class="tree-legend">
+    <div class="tree-legend__item">
+      <span class="tree-legend__swatch" style="background:#8B6F47"></span>
+      <span>الجد الأكبر / المشترك</span>
+    </div>
+    <div class="tree-legend__item">
+      <span class="tree-legend__swatch" style="background:#5E7A5C"></span>
+      <span>فرع وصفي</span>
+    </div>
+    <div class="tree-legend__item">
+      <span class="tree-legend__swatch" style="background:#7A5C4A"></span>
+      <span>فرع عمر وحيد</span>
+    </div>
+    <div class="tree-legend__item">
+      <span class="tree-legend__swatch tree-legend__swatch--ext"></span>
+      <span>أبناء بناتٍ من خارج العائلة</span>
+    </div>
+  </div>
+
+  <p class="tree-help">اضغط على أي اسم لرؤية التفاصيل. اسحب الشجرة للتنقل، أو استخدم عجلة الفأرة للتكبير.</p>
+</main>
+
+<div class="modal" id="person-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" hidden>
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__content">
+    <button type="button" class="modal__close" data-modal-close aria-label="إغلاق">×</button>
+    <h2 id="modal-name" class="modal__name"></h2>
+    <p class="modal__subtitle" id="modal-subtitle"></p>
+    <dl class="modal__details" id="modal-details"></dl>
+  </div>
+</div>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer__inner">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">آل أبو ماضي / الماضي</div>
+        <p class="footer__tagline">الذاكرة تحفظ الجذور.</p>
+      </div>
+      <div class="footer__col">
+        <h3>روابط سريعة</h3>
+        <ul class="footer__links">
+          <li><a href="index.html#document">الوثيقة</a></li>
+          <li><a href="index.html#sources">المصادر</a></li>
+          <li><a href="index.html#contact">تواصل معنا</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h3>آخر تحديث</h3>
+        <p class="footer__tagline"><span data-current-year>2026</span></p>
+      </div>
+    </div>
+    <hr class="footer__divider">
+    <div class="footer__bottom">
+      <p>© جميع الحقوق محفوظة لعائلة أبو ماضي / الماضي</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+<script src="assets/tree.js"></script>
+</body>
+</html>
