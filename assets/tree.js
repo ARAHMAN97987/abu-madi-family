@@ -369,9 +369,10 @@
 
   function setStats() {
     let count = 0, branches = new Set(), gens = new Set();
+    const skipBranches = new Set(['الجد الأكبر','الجد','الجد المشترك','الجيل الثالث','الجيل الرابع']);
     function walk(n) {
       count++;
-      if (n.branch && !['الجد الأكبر','الجد المشترك'].includes(n.branch)) branches.add(n.branch);
+      if (n.branch && !skipBranches.has(n.branch)) branches.add(n.branch);
       if (n.gen) gens.add(n.gen);
       (n.children || []).forEach(walk);
     }
@@ -387,24 +388,23 @@
       applySearch(search.value.trim());
     });
 
-    document.querySelectorAll('.tree-filter').forEach(function (btn) {
+    // Filter buttons (data-branch) are kept optional — only bind if present
+    document.querySelectorAll('.tree-filter[data-branch]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        document.querySelectorAll('.tree-filter').forEach(function (b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tree-filter[data-branch]').forEach(function (b) { b.classList.remove('active'); });
         btn.classList.add('active');
         activeBranch = btn.getAttribute('data-branch');
         applyFilter();
       });
     });
 
-    document.getElementById('zoom-in').addEventListener('click', function () {
-      svg.transition().duration(250).call(zoomBehavior.scaleBy, 1.3);
-    });
-    document.getElementById('zoom-out').addEventListener('click', function () {
-      svg.transition().duration(250).call(zoomBehavior.scaleBy, 1 / 1.3);
-    });
-    document.getElementById('zoom-reset').addEventListener('click', function () {
-      centerOnRoot();
-    });
+    // Zoom buttons are optional now
+    const zi = document.getElementById('zoom-in');
+    const zo = document.getElementById('zoom-out');
+    const zr = document.getElementById('zoom-reset');
+    if (zi) zi.addEventListener('click', () => svg.transition().duration(250).call(zoomBehavior.scaleBy, 1.3));
+    if (zo) zo.addEventListener('click', () => svg.transition().duration(250).call(zoomBehavior.scaleBy, 1 / 1.3));
+    if (zr) zr.addEventListener('click', () => centerOnRoot());
 
     const expandBtn = document.getElementById('expand-all');
     if (expandBtn) {

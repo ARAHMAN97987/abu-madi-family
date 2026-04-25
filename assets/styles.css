@@ -1601,26 +1601,58 @@ strong {
 }
 
 .tree-header h1 {
-  font-size: var(--font-size-h3);
-  margin-block-end: var(--space-1);
+  font-size: var(--font-size-h4);
+  margin: 0;
 }
 
-.tree-header p {
+.tree-stats-floating {
+  position: absolute;
+  top: var(--space-3);
+  inset-inline-start: var(--space-3);
+  z-index: 10;
+  display: flex;
+  gap: var(--space-2);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(44, 36, 24, 0.06);
+}
+
+.tree-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+  padding-inline: var(--space-2);
+  border-inline-start: 1px solid var(--color-border);
+}
+.tree-stat:first-child { border-inline-start: none; }
+
+.tree-stat strong {
+  font-size: var(--font-size-h5);
+  color: var(--color-accent);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tree-stat span {
+  font-size: 0.72rem;
   color: var(--color-text-secondary);
-  font-size: var(--font-size-small);
-  margin: 0;
+  margin-block-start: 2px;
 }
 
 .tree-toolbar {
   position: absolute;
   top: var(--space-3);
-  inset-inline: var(--space-3);
+  inset-inline-end: var(--space-3);
   z-index: 10;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2) var(--space-3);
+  gap: var(--space-2);
   align-items: center;
-  justify-content: center;
   padding: var(--space-2) var(--space-3);
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(10px);
@@ -1628,6 +1660,21 @@ strong {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
   box-shadow: 0 4px 16px rgba(44, 36, 24, 0.08);
+}
+
+.tree-toolbar__group {
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+}
+
+.tree-toolbar__group + .tree-toolbar__group {
+  border-inline-start: 1px solid var(--color-border);
+  padding-inline-start: var(--space-2);
+}
+
+.tree-toolbar__group--search .tree-search {
+  width: 200px;
 }
 
 .tree-toolbar__group {
@@ -2326,33 +2373,36 @@ strong {
     padding: 0 var(--space-4) var(--space-2);
   }
   .tree-header h1 {
-    font-size: 1.15rem;
-  }
-  .tree-header p {
-    font-size: 0.8rem;
-    display: none;
-  }
-  .tree-stats {
-    gap: var(--space-3);
-    font-size: 0.75rem;
-    margin-block-start: var(--space-1);
-  }
-  .tree-stats strong {
     font-size: 1rem;
-    margin-inline-end: 2px;
   }
+
+  .tree-stats-floating {
+    inset-inline-start: var(--space-2);
+    top: var(--space-2);
+    padding: 4px var(--space-2);
+    gap: var(--space-1);
+  }
+  .tree-stat { min-width: 38px; padding-inline: 4px; }
+  .tree-stat strong { font-size: 0.95rem; }
+  .tree-stat span { font-size: 0.65rem; }
 
   /* Convert toolbar into a collapsible drawer */
   .tree-toolbar {
-    inset-inline: var(--space-2);
-    top: var(--space-2);
+    inset-inline-start: var(--space-2);
+    inset-inline-end: var(--space-2);
+    top: 60px;
     padding: var(--space-1) var(--space-2);
     gap: var(--space-1);
     flex-direction: column;
     align-items: stretch;
-    max-height: 44px;
+    border-radius: var(--radius-md);
+    max-height: 40px;
     overflow: hidden;
     transition: max-height 250ms ease;
+  }
+  .tree-toolbar__group + .tree-toolbar__group {
+    border-inline-start: none;
+    padding-inline-start: 0;
   }
   .tree-toolbar.open {
     max-height: 80vh;

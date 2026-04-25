@@ -52,36 +52,26 @@
 <main id="main-content" class="tree-main">
   <header class="tree-header">
     <h1>شجرة عائلة آل أبو ماضي</h1>
-    <p>الطنطورة وإجزم، قضاء حيفا — سبعة أجيال، فرعا وصفي وعمر وحيد، وفرع آل عشماوي عبر وحيدة.</p>
-    <div class="tree-stats">
-      <span><strong id="stat-total">0</strong> فرد</span>
-      <span><strong id="stat-gens">7</strong> أجيال</span>
-      <span><strong id="stat-branches">3</strong> فروع</span>
-    </div>
   </header>
 
   <div class="tree-container" id="tree-container">
     <div class="tree-loading">جاري تحميل الشجرة...</div>
 
+    <div class="tree-stats-floating">
+      <div class="tree-stat"><strong id="stat-total">0</strong><span>فرد</span></div>
+      <div class="tree-stat"><strong id="stat-gens">0</strong><span>أجيال</span></div>
+      <div class="tree-stat"><strong id="stat-branches">0</strong><span>فروع</span></div>
+    </div>
+
     <div class="tree-toolbar">
-      <div class="tree-toolbar__group">
+      <div class="tree-toolbar__group tree-toolbar__group--search">
         <label for="tree-search" class="visually-hidden">بحث</label>
         <input type="search" id="tree-search" class="tree-search" placeholder="ابحث عن اسم..." autocomplete="off">
-      </div>
-      <div class="tree-toolbar__group">
-        <button type="button" class="tree-filter active" data-branch="all">الكل</button>
-        <button type="button" class="tree-filter" data-branch="وصفي">وصفي</button>
-        <button type="button" class="tree-filter" data-branch="عمر وحيد">عمر وحيد</button>
       </div>
       <div class="tree-toolbar__group">
         <button type="button" class="tree-filter" id="expand-all">افتح الكل</button>
         <button type="button" class="tree-filter" id="collapse-all">اطوِ الكل</button>
         <button type="button" class="tree-filter" id="toggle-rels">إظهار العلاقات</button>
-      </div>
-      <div class="tree-toolbar__group">
-        <button type="button" class="tree-zoom" id="zoom-in" aria-label="تكبير">+</button>
-        <button type="button" class="tree-zoom" id="zoom-out" aria-label="تصغير">−</button>
-        <button type="button" class="tree-zoom" id="zoom-reset" aria-label="إعادة">↺</button>
       </div>
       <div class="tree-toolbar__group">
         <button type="button" class="btn btn--secondary tree-edit-btn" id="export-html">تصدير</button>
