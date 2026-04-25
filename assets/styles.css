@@ -454,9 +454,9 @@ strong {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(44, 36, 24, 0.45) 0%,
-    rgba(44, 36, 24, 0.55) 50%,
-    rgba(44, 36, 24, 0.65) 100%
+    transparent 0%,
+    rgba(44, 36, 24, 0.25) 30%,
+    rgba(44, 36, 24, 0.55) 100%
   );
   z-index: 2;
 }
