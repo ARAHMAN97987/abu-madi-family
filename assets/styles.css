@@ -1655,6 +1655,98 @@ strong {
 }
 
 /* ============================================================
+   GALLERY FEATURE — featured map + legend block
+   ============================================================ */
+
+.gallery-feature {
+  max-width: var(--container-max);
+  margin: 0 auto var(--space-12);
+}
+
+.gallery-feature__title {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0 0 var(--space-3);
+}
+
+.gallery-feature__intro {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  text-align: center;
+  line-height: 1.8;
+  max-width: var(--content-max);
+  margin: 0 auto var(--space-8);
+}
+
+.gallery-feature__intro strong {
+  color: var(--color-text-primary);
+}
+
+.gallery-feature__map {
+  margin: 0 0 var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle);
+}
+
+.gallery-feature__map img {
+  width: 100%;
+  max-height: 560px;
+  object-fit: contain;
+  background: #FFFFFF;
+  cursor: zoom-in;
+  display: block;
+  filter: none;
+  transition: transform 350ms ease;
+}
+
+.gallery-feature__map img:hover {
+  transform: scale(1.01);
+}
+
+.gallery-feature__map figcaption {
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  text-align: center;
+  font-style: italic;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.gallery-feature__legends {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.gallery-feature__legends .gallery-item img {
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top;
+}
+
+@media (max-width: 1023px) {
+  .gallery-feature__legends {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .gallery-feature__map img {
+    max-height: 360px;
+  }
+
+  .gallery-feature__legends {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
    CONTACT FORM
    ============================================================ */
 
