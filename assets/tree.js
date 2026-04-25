@@ -88,7 +88,7 @@
 
     svg.selectAll('*').remove();
     g = svg.append('g').attr('class', 'tree-g');
-    gRels = g.append('g').attr('class', 'tree-relationships');
+    gRels = g.append('g').attr('class', 'tree-relationships').style('display', 'none');
 
     zoomBehavior = d3.zoom()
       .scaleExtent([0.3, 2])
@@ -436,9 +436,10 @@
     const relToggle = document.getElementById('toggle-rels');
     if (relToggle) {
       relToggle.addEventListener('click', function () {
-        const hidden = relToggle.classList.toggle('active') === false;
-        if (gRels) gRels.style('display', hidden ? 'none' : null);
-        relToggle.textContent = hidden ? 'إظهار العلاقات' : 'إخفاء العلاقات';
+        const willShow = !relToggle.classList.contains('active');
+        relToggle.classList.toggle('active', willShow);
+        if (gRels) gRels.style('display', willShow ? null : 'none');
+        relToggle.textContent = willShow ? 'إخفاء العلاقات' : 'إظهار العلاقات';
       });
     }
   }
