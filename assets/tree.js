@@ -129,10 +129,10 @@
         });
       })
       .attr('stroke-width', function (d) {
-        return Math.max(1, 4.5 - d.target.depth * 0.6);
+        return Math.max(1.6, 6 - d.target.depth * 0.7);
       })
       .attr('stroke-opacity', function (d) {
-        return Math.max(0.45, 1 - d.target.depth * 0.1);
+        return Math.max(0.55, 1 - d.target.depth * 0.08);
       });
 
     link.exit().transition().duration(DURATION)
@@ -428,6 +428,15 @@
 
     const exportBtn = document.getElementById('export-html');
     if (exportBtn) exportBtn.addEventListener('click', exportHtml);
+
+    const relToggle = document.getElementById('toggle-rels');
+    if (relToggle) {
+      relToggle.addEventListener('click', function () {
+        const hidden = relToggle.classList.toggle('active') === false;
+        if (gRels) gRels.style('display', hidden ? 'none' : null);
+        relToggle.textContent = hidden ? 'إظهار العلاقات' : 'إخفاء العلاقات';
+      });
+    }
   }
 
   function exportHtml() {
