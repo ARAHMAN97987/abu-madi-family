@@ -128,12 +128,8 @@
           target: { x: d.target._x, y: d.target._y }
         });
       })
-      .attr('stroke-width', function (d) {
-        return Math.max(1.6, 6 - d.target.depth * 0.7);
-      })
-      .attr('stroke-opacity', function (d) {
-        return Math.max(0.85, 1 - d.target.depth * 0.03);
-      });
+      .attr('stroke-width', 2)
+      .attr('stroke-opacity', 0.9);
 
     link.exit().transition().duration(DURATION)
       .attr('d', function () {

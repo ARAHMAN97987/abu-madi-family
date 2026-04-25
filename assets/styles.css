@@ -1752,9 +1752,11 @@ strong {
 .tree-link {
   fill: none;
   stroke: #8B6F47;
+  stroke-width: 2;
+  stroke-opacity: 0.9;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
-  transition: stroke 200ms ease, opacity 200ms ease, stroke-width 200ms ease;
+  transition: opacity 200ms ease;
 }
 
 .rel-line {
