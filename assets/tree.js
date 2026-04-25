@@ -57,7 +57,7 @@
     document.querySelector('.tree-loading').textContent = 'تعذّر تحميل الشجرة. حاول تحديث الصفحة.';
   });
 
-  const MIN_SCHEMA = 3;
+  const MIN_SCHEMA = 4;
 
   async function loadData() {
     const fresh = await d3.json('assets/tree-data.json?t=' + Date.now());

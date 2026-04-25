@@ -58,7 +58,7 @@
     render();
   }
 
-  const MIN_SCHEMA = 3;
+  const MIN_SCHEMA = 4;
 
   async function loadData() {
     const res = await fetch(DATA_URL + '?t=' + Date.now());
