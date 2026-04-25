@@ -388,6 +388,269 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeModal();
     });
+
+    const exportBtn = document.getElementById('export-html');
+    if (exportBtn) exportBtn.addEventListener('click', exportHtml);
+  }
+
+  function exportHtml() {
+    const svgEl = document.querySelector('.tree-svg');
+    if (!svgEl) return;
+
+    // Compute bounding box of visible content for export
+    const bbox = g.node().getBBox();
+    const padding = 40;
+    const exportSvg = svgEl.cloneNode(true);
+    exportSvg.setAttribute('width', bbox.width + padding * 2);
+    exportSvg.setAttribute('height', bbox.height + padding * 2);
+    exportSvg.setAttribute('viewBox', `${bbox.x - padding} ${bbox.y - padding} ${bbox.width + padding * 2} ${bbox.height + padding * 2}`);
+
+    // Reset the inner transform so the svg displays the full content centered
+    const inner = exportSvg.querySelector('.tree-g');
+    if (inner) inner.removeAttribute('transform');
+
+    const today = new Date().toLocaleDateString('ar', { year: 'numeric', month: 'long', day: 'numeric' });
+    const visibleCount = root.descendants().length;
+
+    // Count active filter
+    let filterLabel = 'جميع الفروع';
+    const activeBtn = document.querySelector('.tree-filter.active');
+    if (activeBtn && activeBtn.getAttribute('data-branch') !== 'all') {
+      filterLabel = 'فرع ' + activeBtn.getAttribute('data-branch');
+    }
+
+    const css = `
+:root {
+  --bg: #F5F0E8;
+  --surface: #FFFFFF;
+  --surface-alt: #EDE7DB;
+  --text: #2C2418;
+  --text-secondary: #6B5D4D;
+  --accent: #8B6F47;
+  --border: #D4C9B8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  line-height: 1.6;
+  padding: 40px 20px;
+}
+.export-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: var(--surface);
+  padding: 60px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(44,36,24,0.08);
+}
+.export-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border);
+}
+.export-header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.export-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+.export-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+.export-meta span strong {
+  color: var(--accent);
+  font-weight: 700;
+  margin-left: 4px;
+}
+.export-svg-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: linear-gradient(135deg, #FAF7F1 0%, #F5F0E8 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 24px 0;
+}
+.export-svg-wrap svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+.tree-link { fill: none; stroke: var(--border); stroke-width: 1.5; }
+.rel-line { stroke: #C9A96E; stroke-width: 2; stroke-dasharray: 6 4; opacity: 0.7; fill: none; }
+.tree-node rect { stroke: rgba(44,36,24,0.15); }
+.tree-node--root rect { stroke: var(--accent); stroke-width: 2; }
+.tree-node--deceased rect { stroke-dasharray: 4 3; }
+.tree-node__name {
+  font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  fill: #FFFFFF;
+}
+.tree-node__sub {
+  font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
+  font-size: 10px;
+  fill: rgba(255,255,255,0.85);
+}
+.tree-node__toggle-bg, .tree-node__toggle, .tree-node__toggle-group { display: none; }
+.export-relationships {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--surface-alt);
+  border-radius: 12px;
+}
+.export-relationships h2 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+  color: var(--accent);
+}
+.export-rel-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+.export-rel-list li {
+  background: var(--surface);
+  padding: 16px;
+  border-radius: 8px;
+  border-right: 4px solid #C9A96E;
+}
+.export-rel-list .rel-pair {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.export-rel-list .rel-type {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.export-rel-list .rel-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.export-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.export-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.export-legend i {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+.export-footer {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+@media print {
+  body { padding: 0; background: white; }
+  .export-page { box-shadow: none; padding: 20px; max-width: 100%; }
+  .export-svg-wrap { background: white; border: none; padding: 0; }
+}
+`;
+
+    // Build relationships HTML
+    const byId = {};
+    root.descendants().forEach(n => { byId[n.data.id] = n.data.name; });
+    const visibleRels = relationships.filter(r => byId[r.from] && byId[r.to]);
+    let relHtml = '';
+    if (visibleRels.length) {
+      relHtml = `
+  <section class="export-relationships">
+    <h2>العلاقات الخاصة في العائلة</h2>
+    <ul class="export-rel-list">
+      ${visibleRels.map(r => `
+        <li>
+          <div class="rel-pair">${escHtml(byId[r.from])} ↔ ${escHtml(byId[r.to])}</div>
+          <div class="rel-type">${escHtml(r.type)}</div>
+          ${r.description ? `<div class="rel-desc">${escHtml(r.description)}</div>` : ''}
+        </li>`).join('')}
+    </ul>
+  </section>`;
+    }
+
+    const html = `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>شجرة عائلة آل أبو ماضي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>${css}</style>
+</head>
+<body>
+<div class="export-page">
+  <header class="export-header">
+    <h1>شجرة عائلة آل أبو ماضي / الماضي</h1>
+    <p class="subtitle">الطنطورة وإجزم — قضاء حيفا</p>
+    <div class="export-meta">
+      <span><strong>${visibleCount}</strong>فرد معروض</span>
+      <span><strong>${filterLabel}</strong></span>
+      <span>تاريخ التصدير: <strong>${today}</strong></span>
+    </div>
+    <div class="export-legend">
+      <span><i style="background:#8B6F47"></i>الجد المشترك</span>
+      <span><i style="background:#5E7A5C"></i>فرع وصفي</span>
+      <span><i style="background:#7A5C4A"></i>فرع عمر وحيد</span>
+    </div>
+  </header>
+  <div class="export-svg-wrap">
+    ${exportSvg.outerHTML}
+  </div>
+  ${relHtml}
+  <footer class="export-footer">
+    <p>© عائلة آل أبو ماضي / الماضي — الذاكرة تحفظ الجذور</p>
+  </footer>
+</div>
+</body>
+</html>`;
+
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'شجرة-عائلة-آل-أبو-ماضي.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function escHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, m =>
+      ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   }
 
   function applySearch(query) {
