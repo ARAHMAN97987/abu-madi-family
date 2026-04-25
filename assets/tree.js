@@ -9,6 +9,7 @@
 
   const branchColors = {
     'الجد الأكبر': '#8B6F47',
+    'الجد': '#8B6F47',
     'الجد المشترك': '#8B6F47',
     'وصفي': '#5E7A5C',
     'عمر وحيد': '#7A5C4A',
@@ -323,9 +324,11 @@
   }
 
   function generationLabel(d) {
-    if (d.data.gen === '0') return 'الجد الأكبر';
-    if (d.data.gen === '1') return 'الجد المشترك';
-    return 'الجيل ' + d.data.gen;
+    const data = d.data || d;
+    if (data.gen === '0') return 'الجد الأكبر';
+    if (data.gen === '1') return 'الجد';
+    if (data.gen === '2') return 'الجد المشترك';
+    return 'الجيل ' + data.gen;
   }
 
   function centerOnRoot() {
