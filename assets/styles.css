@@ -1738,7 +1738,12 @@ strong {
   fill: none;
   stroke: #B5A589;
   stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
   transition: stroke 200ms ease, opacity 200ms ease, stroke-width 200ms ease;
+}
+
+.rel-line {
+  vector-effect: non-scaling-stroke;
 }
 
 .tree-node__toggle-group {
