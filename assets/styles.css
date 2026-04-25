@@ -835,6 +835,36 @@ strong {
   margin-inline: auto;
 }
 
+.document__gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.document__gallery img {
+  width: 100%;
+  height: auto;
+  max-width: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: zoom-in;
+  background: var(--color-surface);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.document__gallery img:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-medium);
+}
+
+@media (max-width: 767px) {
+  .document__gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
 .document__pair img {
   width: 100%;
   height: auto;
