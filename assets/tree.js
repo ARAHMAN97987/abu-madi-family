@@ -121,15 +121,15 @@
       });
 
     linkEnter.merge(link)
+      .attr('stroke-width', null)
+      .attr('stroke-opacity', null)
       .transition().duration(DURATION)
       .attr('d', function (d) {
         return diagonal({
           source: { x: d.source._x, y: d.source._y },
           target: { x: d.target._x, y: d.target._y }
         });
-      })
-      .attr('stroke-width', 2)
-      .attr('stroke-opacity', 0.9);
+      });
 
     link.exit().transition().duration(DURATION)
       .attr('d', function () {
