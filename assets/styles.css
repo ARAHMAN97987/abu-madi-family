@@ -1040,6 +1040,275 @@ strong {
 }
 
 /* ============================================================
+   EVIDENCE CARDS (شواهد تختصر الحكاية)
+   ============================================================ */
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-5);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+  margin-block-start: var(--space-8);
+}
+
+.evidence-card {
+  position: relative;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  box-shadow: var(--shadow-subtle);
+  transition: box-shadow var(--transition-normal), border-color var(--transition-normal), transform var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.evidence-card:hover {
+  box-shadow: var(--shadow-medium);
+  border-color: rgba(139, 111, 71, 0.3);
+  transform: translateY(-2px);
+}
+
+.evidence-card__num {
+  position: absolute;
+  top: var(--space-4);
+  inset-inline-end: var(--space-5);
+  font-size: 1.6rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent);
+  opacity: 0.55;
+  line-height: 1;
+}
+
+.evidence-card__title {
+  font-size: 1.05rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0;
+  padding-inline-end: var(--space-8);
+}
+
+.evidence-card__text {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+.evidence-card__text strong {
+  color: var(--color-text-primary);
+}
+
+.evidence-card__link {
+  font-size: var(--font-size-small);
+  color: var(--color-accent);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  margin-block-start: var(--space-1);
+  transition: color var(--transition-fast);
+}
+
+.evidence-card__link:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ============================================================
+   TIMELINE (محطات موثقة)
+   ============================================================ */
+
+.timeline {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-6) 0;
+  counter-reset: timeline;
+}
+
+.timeline__item {
+  position: relative;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  border-inline-start: 3px solid var(--color-accent);
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.timeline__item:hover {
+  box-shadow: var(--shadow-subtle);
+  transform: translateY(-2px);
+}
+
+.timeline__year {
+  display: inline-block;
+  font-size: 1.05rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent);
+  margin-block-end: var(--space-2);
+  letter-spacing: 0.5px;
+}
+
+.timeline__event {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.timeline__event strong {
+  color: var(--color-text-primary);
+}
+
+.timeline__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin: calc(var(--space-5) * -1);
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+}
+
+.timeline__link::after {
+  content: ' ←';
+  color: var(--color-accent);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ============================================================
+   QUOTE CARD (highlighted quote box)
+   ============================================================ */
+
+.quote-card {
+  margin: var(--space-10) auto;
+  max-width: var(--content-max);
+  background-color: var(--color-surface-alt, #F0EAD6);
+  border-inline-start: 4px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-6) var(--space-7);
+  position: relative;
+  box-shadow: var(--shadow-subtle);
+}
+
+.quote-card__label {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-block-end: var(--space-3);
+  display: block;
+}
+
+.quote-card__body {
+  font-size: 1.15rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.quote-card__source {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  margin-block-start: var(--space-3);
+  margin-block-end: 0;
+}
+
+/* ============================================================
+   PROOF LIST (ما الذي تثبته الوثيقة)
+   ============================================================ */
+
+.proof-list {
+  list-style: none;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline-start: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.proof-list li {
+  position: relative;
+  padding: var(--space-4) var(--space-5);
+  padding-inline-start: var(--space-12);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-body);
+  color: var(--color-text-primary);
+  line-height: 1.7;
+}
+
+.proof-list li::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  inset-inline-start: var(--space-5);
+  width: 22px;
+  height: 22px;
+  transform: translateY(-50%);
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ============================================================
+   SOURCES GRID (4 categorized groups)
+   ============================================================ */
+
+.sources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-5);
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+.sources-group {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+
+.sources-group__title {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+  margin: 0 0 var(--space-3);
+  padding-block-end: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sources-group__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sources-group__list li {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ============================================================
    CONTACT FORM
    ============================================================ */
 
