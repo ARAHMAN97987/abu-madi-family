@@ -58,18 +58,27 @@
     render();
   }
 
+  const MIN_SCHEMA = 3;
+
   async function loadData() {
+    const res = await fetch(DATA_URL + '?t=' + Date.now());
+    const fresh = await res.json();
     const cached = localStorage.getItem(STORAGE_KEY);
     if (cached) {
       try {
-        state = JSON.parse(cached);
-        if (!state.tree) throw new Error('invalid');
-        return;
+        const parsed = JSON.parse(cached);
+        const cv = parsed.schema_version || 0;
+        const sv = fresh.schema_version || 0;
+        if (parsed.tree && cv >= MIN_SCHEMA && cv >= sv) {
+          state = parsed;
+          if (!state.relationships) state.relationships = [];
+          return;
+        }
       } catch (e) { /* fallthrough */ }
     }
-    const res = await fetch(DATA_URL + '?t=' + Date.now());
-    state = await res.json();
+    state = fresh;
     if (!state.relationships) state.relationships = [];
+    localStorage.removeItem(STORAGE_KEY);
   }
 
   function persist() {

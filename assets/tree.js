@@ -57,12 +57,20 @@
     document.querySelector('.tree-loading').textContent = 'تعذّر تحميل الشجرة. حاول تحديث الصفحة.';
   });
 
+  const MIN_SCHEMA = 3;
+
   async function loadData() {
+    const fresh = await d3.json('assets/tree-data.json?t=' + Date.now());
     const cached = localStorage.getItem(STORAGE_KEY);
     if (cached) {
-      try { return JSON.parse(cached); } catch (e) { /* ignore */ }
+      try {
+        const parsed = JSON.parse(cached);
+        const cv = parsed.schema_version || 0;
+        const sv = (fresh && fresh.schema_version) || 0;
+        if (cv >= MIN_SCHEMA && cv >= sv) return parsed;
+      } catch (e) { /* ignore */ }
     }
-    return d3.json('assets/tree-data.json?t=' + Date.now());
+    return fresh;
   }
 
   function initSVG() {
