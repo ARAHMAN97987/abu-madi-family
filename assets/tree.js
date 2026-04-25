@@ -127,6 +127,12 @@
           source: { x: d.source._x, y: d.source._y },
           target: { x: d.target._x, y: d.target._y }
         });
+      })
+      .attr('stroke-width', function (d) {
+        return Math.max(1, 4.5 - d.target.depth * 0.6);
+      })
+      .attr('stroke-opacity', function (d) {
+        return Math.max(0.45, 1 - d.target.depth * 0.1);
       });
 
     link.exit().transition().duration(DURATION)

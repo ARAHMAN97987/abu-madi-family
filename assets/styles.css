@@ -1736,9 +1736,9 @@ strong {
 
 .tree-link {
   fill: none;
-  stroke: var(--color-border);
-  stroke-width: 1.5;
-  transition: stroke 200ms ease, opacity 200ms ease;
+  stroke: #B5A589;
+  stroke-linecap: round;
+  transition: stroke 200ms ease, opacity 200ms ease, stroke-width 200ms ease;
 }
 
 .tree-node__toggle-group {
