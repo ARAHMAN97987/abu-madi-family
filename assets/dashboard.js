@@ -514,50 +514,31 @@
   }
 
   async function publishToGithub() {
-    const pat = localStorage.getItem(PAT_KEY);
-    if (!pat) {
-      alert('لم يتم إعداد التوكن بعد. اضغط "إعداد التوكن" أولاً.');
-      openPatModal();
-      return;
+    // Ask for the dashboard password (stored briefly in sessionStorage so user
+    // doesn't retype within the same session).
+    let pwd = sessionStorage.getItem('abumadi_publish_pwd');
+    if (!pwd) {
+      pwd = prompt('أدخل كلمة سر النشر:');
+      if (!pwd) return;
     }
     const btn = document.getElementById('btn-publish');
     const original = btn.textContent;
     btn.disabled = true;
     btn.textContent = 'جارٍ النشر...';
     try {
-      // 1) GET current file SHA
-      const apiBase = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_PATH}`;
-      const headers = {
-        'Authorization': `Bearer ${pat}`,
-        'Accept': 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-      };
-      const getRes = await fetch(apiBase + '?ref=main', { headers, cache: 'no-store' });
-      if (!getRes.ok) {
-        const txt = await getRes.text();
-        throw new Error(`فشل قراءة الملف (${getRes.status}): ${txt.slice(0, 120)}`);
-      }
-      const current = await getRes.json();
-      // 2) PUT new content
-      const json = JSON.stringify(state, null, 2);
-      const b64 = b64encodeUtf8(json);
-      const putRes = await fetch(apiBase, {
-        method: 'PUT',
-        headers: Object.assign({}, headers, { 'Content-Type': 'application/json' }),
-        body: JSON.stringify({
-          message: 'Update tree data via dashboard',
-          content: b64,
-          sha: current.sha,
-          branch: 'main',
-        }),
+      const res = await fetch('/api/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pwd, data: state }),
       });
-      if (!putRes.ok) {
-        const err = await putRes.json().catch(() => ({}));
-        throw new Error(`فشل النشر (${putRes.status}): ${err.message || 'خطأ غير معروف'}`);
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        sessionStorage.removeItem('abumadi_publish_pwd');
+        throw new Error(result.error || `HTTP ${res.status}`);
       }
-      const result = await putRes.json();
+      sessionStorage.setItem('abumadi_publish_pwd', pwd);
       notify('✓ تم النشر! ستظهر التحديثات للزوار خلال 1–2 دقيقة.');
-      console.log('Commit:', result.commit && result.commit.html_url);
+      console.log('Commit:', result.commit);
     } catch (err) {
       alert('فشل النشر: ' + err.message);
       console.error(err);
