@@ -1545,6 +1545,116 @@ strong {
 }
 
 /* ============================================================
+   GALLERY (المعرض البصري)
+   ============================================================ */
+
+.gallery-section {
+  padding-block: var(--space-12);
+  padding-inline: var(--space-6);
+}
+
+.gallery-section--alt {
+  background-color: var(--color-surface-alt);
+}
+
+.gallery-section__title {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0 0 var(--space-3);
+}
+
+.gallery-section__intro {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  text-align: center;
+  max-width: var(--content-max);
+  margin: 0 auto var(--space-8);
+  line-height: 1.7;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-5);
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+.gallery-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+  margin: 0;
+}
+
+.gallery-item:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-3px);
+}
+
+.gallery-item img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  cursor: zoom-in;
+  filter: sepia(15%) contrast(1.05);
+  transition: filter 250ms ease, transform 350ms ease;
+  display: block;
+}
+
+.gallery-item:hover img {
+  filter: sepia(5%) contrast(1.08);
+  transform: scale(1.03);
+}
+
+.gallery-item__caption {
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  font-size: var(--font-size-small);
+  color: var(--color-text-primary);
+  line-height: 1.65;
+  flex: 1;
+  margin: 0;
+}
+
+.gallery-item__caption strong {
+  color: var(--color-accent);
+}
+
+.gallery-item__source {
+  padding: 0 var(--space-4) var(--space-4);
+  font-size: var(--font-size-caption);
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 0;
+  border-top: 1px dashed var(--color-border);
+  padding-block-start: var(--space-2);
+  margin-block-start: var(--space-2);
+  margin-inline: var(--space-4);
+  padding-inline: 0;
+}
+
+@media (max-width: 767px) {
+  .gallery-section {
+    padding-block: var(--space-8);
+    padding-inline: var(--space-4);
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-item img {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* ============================================================
    CONTACT FORM
    ============================================================ */
 
@@ -1676,7 +1786,7 @@ strong {
 
 .footer__sitemap {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: var(--space-4);
   margin-block-end: var(--space-2);
 }
