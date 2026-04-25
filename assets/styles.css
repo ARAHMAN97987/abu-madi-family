@@ -271,13 +271,36 @@ strong {
 }
 
 .nav__brand {
-  font-size: var(--font-size-h5);
-  font-weight: var(--font-weight-semibold);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  line-height: 1.1;
   color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.nav__brand-main {
+  font-size: 1.15rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.2px;
+  color: var(--color-text-primary);
+}
+
+.nav__brand-sub {
+  font-size: 0.72rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-accent);
+  letter-spacing: 1.5px;
+  text-transform: none;
 }
 
 .nav__brand:hover {
   color: var(--color-text-primary);
+}
+
+.nav__brand:hover .nav__brand-sub {
+  color: var(--color-accent-deep, #6E5636);
 }
 
 .nav__list {
@@ -2134,6 +2157,11 @@ strong {
   .footer__sitemap {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* If the last card is alone in 2-col grid (odd count), span full width */
+  .footer__sitemap-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 }
 
 /* ============================================================
@@ -2146,6 +2174,16 @@ strong {
     --font-size-h2: 1.6rem;
     --font-size-h3: 1.3rem;
   }
+
+  .nav__brand-main {
+    font-size: 1rem;
+  }
+
+  .nav__brand-sub {
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+  }
+
 
   .nav {
     height: var(--nav-height-mobile);
@@ -2243,8 +2281,17 @@ strong {
     max-width: 100%;
   }
 
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 280px;
+    margin-inline: auto;
+  }
+
   .hero__actions .btn {
-    min-width: 140px;
+    min-width: 0;
+    width: 100%;
   }
 
   .back-to-top {
@@ -2254,13 +2301,11 @@ strong {
     height: 40px;
   }
 
-  .doc-table-wrapper {
-    overflow-x: auto;
+  .doc-table-wrap {
     -webkit-overflow-scrolling: touch;
-    margin-block: var(--space-8);
   }
 
-  .doc-table-wrapper .doc-table {
+  .doc-table-wrap .doc-table {
     min-width: 500px;
     margin-block: 0;
   }
