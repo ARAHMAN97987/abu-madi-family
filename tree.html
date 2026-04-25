@@ -38,7 +38,7 @@
     </button>
     <ul class="nav__list" id="nav-menu" role="list">
       <li><a href="index.html" class="nav__link">الرئيسية</a></li>
-      <li><a href="rabt.html" class="nav__link">الربط بين الاسمين</a></li>
+      <li><a href="rabt.html" class="nav__link">أبو ماضي والماضي</a></li>
       <li><a href="expanded.html" class="nav__link">الوثيقة</a></li>
       <li><a href="tree.html" class="nav__link active">الشجرة</a></li>
       <li><a href="index.html#contact" class="nav__link">تواصل</a></li>
@@ -61,19 +61,27 @@
       <div class="tree-stat"><strong id="stat-branches">0</strong><span>فروع</span></div>
     </div>
 
-    <div class="tree-toolbar">
-      <div class="tree-toolbar__group tree-toolbar__group--search">
-        <label for="tree-search" class="visually-hidden">بحث</label>
-        <input type="search" id="tree-search" class="tree-search" placeholder="ابحث عن اسم..." autocomplete="off">
-      </div>
-      <div class="tree-toolbar__group">
-        <button type="button" class="tree-filter" id="expand-all">افتح الكل</button>
-        <button type="button" class="tree-filter" id="collapse-all">اطوِ الكل</button>
-        <button type="button" class="tree-filter" id="toggle-rels">إظهار العلاقات</button>
-      </div>
-      <div class="tree-toolbar__group">
-        <button type="button" class="btn btn--secondary tree-edit-btn" id="export-html">تصدير</button>
-        <a href="dashboard.html" class="btn btn--secondary tree-edit-btn">تعديل</a>
+    <div class="tree-toolbar" id="tree-toolbar">
+      <button type="button" class="tree-toolbar__toggle" id="tree-toolbar-toggle" aria-controls="tree-toolbar" aria-expanded="false">
+        <span class="tree-toolbar__toggle-label">أدوات الشجرة</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="tree-toolbar__body">
+        <div class="tree-toolbar__group tree-toolbar__group--search">
+          <label for="tree-search" class="visually-hidden">بحث</label>
+          <input type="search" id="tree-search" class="tree-search" placeholder="ابحث عن اسم..." autocomplete="off">
+        </div>
+        <div class="tree-toolbar__group">
+          <button type="button" class="tree-filter" id="expand-all">افتح الكل</button>
+          <button type="button" class="tree-filter" id="collapse-all">اطوِ الكل</button>
+          <button type="button" class="tree-filter" id="toggle-rels">إظهار العلاقات</button>
+        </div>
+        <div class="tree-toolbar__group">
+          <button type="button" class="tree-filter" id="export-html">تصدير</button>
+          <a href="dashboard.html" class="tree-filter">تعديل</a>
+        </div>
       </div>
     </div>
 
@@ -108,7 +116,7 @@
           <path d="M15 7h2a5 5 0 0 1 0 10h-2"></path>
           <line x1="8" y1="12" x2="16" y2="12"></line>
         </svg>
-        <span class="footer__sitemap-title">الربط بين الاسمين</span>
+        <span class="footer__sitemap-title">أبو ماضي والماضي</span>
         <span class="footer__sitemap-hint">قراءة 5 دقائق</span>
       </a>
       <a href="expanded.html" class="footer__sitemap-card">
