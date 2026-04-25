@@ -132,7 +132,7 @@
         return Math.max(1.6, 6 - d.target.depth * 0.7);
       })
       .attr('stroke-opacity', function (d) {
-        return Math.max(0.55, 1 - d.target.depth * 0.08);
+        return Math.max(0.85, 1 - d.target.depth * 0.03);
       });
 
     link.exit().transition().duration(DURATION)
