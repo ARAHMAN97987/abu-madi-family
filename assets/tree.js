@@ -11,8 +11,11 @@
     'الجد الأكبر': '#8B6F47',
     'الجد': '#8B6F47',
     'الجد المشترك': '#8B6F47',
+    'الجيل الثالث': '#8B6F47',
+    'الجيل الرابع': '#8B6F47',
     'وصفي': '#5E7A5C',
     'عمر وحيد': '#7A5C4A',
+    'وحيدة - عشماوي': '#94735A',
   };
 
   function colorFor(d) { return branchColors[d.data.branch] || '#8B6F47'; }
@@ -57,7 +60,7 @@
     document.querySelector('.tree-loading').textContent = 'تعذّر تحميل الشجرة. حاول تحديث الصفحة.';
   });
 
-  const MIN_SCHEMA = 4;
+  const MIN_SCHEMA = 5;
 
   async function loadData() {
     const fresh = await d3.json('assets/tree-data.json?t=' + Date.now());
