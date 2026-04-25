@@ -433,6 +433,25 @@
     const exportBtn = document.getElementById('export-html');
     if (exportBtn) exportBtn.addEventListener('click', exportHtml);
 
+    // Mobile: tap toolbar header to expand/collapse
+    const toolbarEl = document.querySelector('.tree-toolbar');
+    if (toolbarEl) {
+      toolbarEl.addEventListener('click', function (e) {
+        if (window.innerWidth > 767) return;
+        // Only toggle when clicking the ::before pseudo (top area)
+        const rect = toolbarEl.getBoundingClientRect();
+        if (e.clientY - rect.top < 44 && e.target === toolbarEl) {
+          toolbarEl.classList.toggle('open');
+        }
+      });
+      // Make the pseudo-element area clickable explicitly
+      toolbarEl.addEventListener('click', function (e) {
+        if (window.innerWidth > 767) return;
+        if (e.target.closest('.tree-toolbar__group')) return;
+        toolbarEl.classList.toggle('open');
+      });
+    }
+
     const relToggle = document.getElementById('toggle-rels');
     if (relToggle) {
       relToggle.addEventListener('click', function () {

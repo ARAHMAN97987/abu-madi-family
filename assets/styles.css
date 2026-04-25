@@ -2319,17 +2319,85 @@ strong {
 }
 
 @media (max-width: 767px) {
+  .tree-main {
+    padding-block: calc(var(--nav-height-mobile) + var(--space-3)) 0;
+  }
+  .tree-header {
+    padding: 0 var(--space-4) var(--space-2);
+  }
+  .tree-header h1 {
+    font-size: 1.15rem;
+  }
+  .tree-header p {
+    font-size: 0.8rem;
+    display: none;
+  }
+  .tree-stats {
+    gap: var(--space-3);
+    font-size: 0.75rem;
+    margin-block-start: var(--space-1);
+  }
+  .tree-stats strong {
+    font-size: 1rem;
+    margin-inline-end: 2px;
+  }
+
+  /* Convert toolbar into a collapsible drawer */
   .tree-toolbar {
     inset-inline: var(--space-2);
-    padding: var(--space-2);
+    top: var(--space-2);
+    padding: var(--space-1) var(--space-2);
     gap: var(--space-1);
+    flex-direction: column;
+    align-items: stretch;
+    max-height: 44px;
+    overflow: hidden;
+    transition: max-height 250ms ease;
   }
-  .tree-search { width: 140px; }
+  .tree-toolbar.open {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .tree-toolbar::before {
+    content: "أدوات الشجرة ▾";
+    display: block;
+    text-align: center;
+    padding: var(--space-2) 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    cursor: pointer;
+  }
+  .tree-toolbar.open::before {
+    content: "إخفاء الأدوات ▴";
+  }
+  .tree-toolbar__group {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-block: var(--space-1);
+    border-top: 1px dashed var(--color-border);
+  }
+  .tree-toolbar__group:first-of-type { border-top: none; }
+  .tree-search { width: 100%; }
+  .tree-filter, .tree-zoom, .tree-edit-btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    min-height: 36px;
+  }
+  .tree-zoom { width: 36px; height: 36px; padding: 0; }
+
+  /* Compact legend at bottom */
   .tree-legend {
     inset-inline-end: var(--space-2);
     bottom: var(--space-2);
-    font-size: 0.75rem;
-    padding: var(--space-2);
+    font-size: 0.7rem;
+    padding: var(--space-1) var(--space-2);
+    gap: 4px;
+  }
+  .tree-legend__swatch {
+    width: 10px;
+    height: 10px;
   }
 }
 
