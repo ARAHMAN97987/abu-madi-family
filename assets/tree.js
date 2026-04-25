@@ -307,7 +307,15 @@
   }
 
   function diagonal(d) {
-    return d3.linkHorizontal().x(function (p) { return p.y; }).y(function (p) { return p.x; })(d);
+    // Orthogonal L-shaped path between source and target (RTL horizontal)
+    const sx = d.source.y, sy = d.source.x;
+    const tx = d.target.y, ty = d.target.x;
+    const r = 8;
+    if (sy === ty) return `M${sx},${sy} L${tx},${ty}`;
+    const mx = (sx + tx) / 2;
+    const dir = sy < ty ? 1 : -1;
+    const dx = sx < tx ? 1 : -1;
+    return `M${sx},${sy} L${mx - dx*r},${sy} Q${mx},${sy} ${mx},${sy + dir*r} L${mx},${ty - dir*r} Q${mx},${ty} ${mx + dx*r},${ty} L${tx},${ty}`;
   }
 
   function toggle(d) {
