@@ -219,6 +219,7 @@
     nodes.forEach(function (d) { d.x0 = d._x; d.y0 = d._y; });
 
     drawRelationships(nodes);
+    if (gRels) gRels.raise();
 
     // First-time center
     if (!update.centered) {
@@ -251,10 +252,24 @@
       .attr('d', function (d) {
         const a = byId[d.from], b = byId[d.to];
         const x1 = a._y, y1 = a._x, x2 = b._y, y2 = b._x;
+        // Compute a smooth curve that bows clearly upward or downward,
+        // away from the median row, so it doesn't hide behind nodes.
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        // bow direction: above or below depending on which y avg is further from center of svg
+        const bow = Math.min(dist * 0.35, 220);
         const mx = (x1 + x2) / 2;
         const my = (y1 + y2) / 2;
-        const offset = Math.abs(y2 - y1) / 4 + 30;
-        return `M ${x1} ${y1} Q ${mx} ${my + offset} ${x2} ${y2}`;
+        // Perpendicular offset: rotate normal of the segment by 90°
+        const len = Math.max(1, dist);
+        const nx = -dy / len;
+        const ny = dx / len;
+        // bias to bow downward/outward (positive y in screen coords)
+        const dir = ny < 0 ? -1 : 1;
+        const cx = mx + nx * bow * dir;
+        const cy = my + ny * bow * dir;
+        return `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`;
       });
 
     sel.exit().remove();
@@ -575,31 +590,15 @@ body {
   color: var(--text-secondary);
 }
 @media print {
+  @page { size: A3 landscape; margin: 12mm; }
   body { padding: 0; background: white; }
-  .export-page { box-shadow: none; padding: 20px; max-width: 100%; }
-  .export-svg-wrap { background: white; border: none; padding: 0; }
+  .export-page { box-shadow: none; padding: 0; max-width: 100%; border-radius: 0; }
+  .export-svg-wrap { background: white; border: none; padding: 0; overflow: visible; page-break-inside: avoid; }
+  .export-svg-wrap svg { width: 100% !important; height: auto !important; }
+  .export-footer button { display: none !important; }
+  .export-header { page-break-after: avoid; }
 }
 `;
-
-    // Build relationships HTML
-    const byId = {};
-    root.descendants().forEach(n => { byId[n.data.id] = n.data.name; });
-    const visibleRels = relationships.filter(r => byId[r.from] && byId[r.to]);
-    let relHtml = '';
-    if (visibleRels.length) {
-      relHtml = `
-  <section class="export-relationships">
-    <h2>العلاقات الخاصة في العائلة</h2>
-    <ul class="export-rel-list">
-      ${visibleRels.map(r => `
-        <li>
-          <div class="rel-pair">${escHtml(byId[r.from])} ↔ ${escHtml(byId[r.to])}</div>
-          <div class="rel-type">${escHtml(r.type)}</div>
-          ${r.description ? `<div class="rel-desc">${escHtml(r.description)}</div>` : ''}
-        </li>`).join('')}
-    </ul>
-  </section>`;
-    }
 
     const html = `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -631,9 +630,9 @@ body {
   <div class="export-svg-wrap">
     ${exportSvg.outerHTML}
   </div>
-  ${relHtml}
   <footer class="export-footer">
     <p>© عائلة آل أبو ماضي / الماضي — الذاكرة تحفظ الجذور</p>
+    <p style="margin-top:8px"><button onclick="window.print()" style="padding:8px 16px;background:#8B6F47;color:white;border:none;border-radius:4px;cursor:pointer;font-family:inherit;">طباعة الصفحة</button></p>
   </footer>
 </div>
 </body>
@@ -719,7 +718,7 @@ body {
     [
       ['الأب', p.father], ['الأم', p.mother], ['الزوج/الزوجة', p.spouse],
       ['سنة الميلاد', p.birth], ['سنة الوفاة', p.death],
-      ['مكان الإقامة', p.location], ['ملاحظات', p.notes],
+      ['مكان الإقامة', p.location], ['الوظيفة', p.occupation], ['ملاحظات', p.notes],
     ].forEach(function (pair) {
       if (!pair[1]) return;
       const dt = document.createElement('dt'); dt.textContent = pair[0];
@@ -727,8 +726,72 @@ body {
       dl.appendChild(dt); dl.appendChild(dd);
     });
 
+    // Relationships involving this person
+    const personRels = relationships.filter(r => r.from === p.id || r.to === p.id);
+    if (personRels.length) {
+      const allById = {};
+      collectAll(rootData, allById);
+      const dt = document.createElement('dt');
+      dt.textContent = 'العلاقات الخاصة';
+      dt.className = 'modal__rel-header';
+      dl.appendChild(dt);
+
+      const dd = document.createElement('dd');
+      dd.className = 'modal__rels';
+      personRels.forEach(function (r) {
+        const otherId = r.from === p.id ? r.to : r.from;
+        const otherName = (allById[otherId] && allById[otherId].name) || otherId;
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'modal__rel-chip';
+        item.innerHTML = `
+          <span class="rel-chip__type">${escText(r.type)}</span>
+          <span class="rel-chip__with">↔ ${escText(otherName)}</span>`;
+        item.addEventListener('click', function (e) {
+          e.stopPropagation();
+          showRelDetails(r, p, allById[otherId] || { name: otherName });
+        });
+        dd.appendChild(item);
+      });
+      dl.appendChild(dd);
+    }
+
     document.getElementById('person-modal').hidden = false;
     document.body.style.overflow = 'hidden';
+  }
+
+  function collectAll(node, out) {
+    out[node.id] = node;
+    (node.children || []).forEach(c => collectAll(c, out));
+  }
+
+  function escText(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, m =>
+      ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  function showRelDetails(rel, currentPerson, otherPerson) {
+    document.getElementById('modal-name').textContent = rel.type;
+    document.getElementById('modal-subtitle').textContent =
+      currentPerson.name + ' ↔ ' + (otherPerson.name || '');
+    const dl = document.getElementById('modal-details');
+    dl.innerHTML = '';
+    if (rel.description) {
+      const dt = document.createElement('dt'); dt.textContent = 'التفاصيل';
+      const dd = document.createElement('dd'); dd.textContent = rel.description;
+      dl.appendChild(dt); dl.appendChild(dd);
+    }
+    // Back button
+    const back = document.createElement('button');
+    back.type = 'button';
+    back.className = 'modal__back';
+    back.textContent = '← رجوع إلى ' + currentPerson.name;
+    back.addEventListener('click', function () { showPersonModal(currentPerson); });
+    const dd = document.createElement('dd');
+    dd.className = 'modal__back-wrap';
+    dd.appendChild(back);
+    dl.appendChild(dd);
   }
 
   function closeModal() {

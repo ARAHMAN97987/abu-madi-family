@@ -1745,16 +1745,18 @@ strong {
 }
 
 .rel-line {
-  stroke: #C9A96E;
-  stroke-width: 2;
-  stroke-dasharray: 6 4;
-  opacity: 0.7;
-  transition: opacity 200ms ease, stroke-width 150ms ease;
+  stroke: #B8893E;
+  stroke-width: 2.5;
+  stroke-dasharray: 7 5;
+  opacity: 0.85;
+  fill: none;
+  filter: drop-shadow(0 1px 2px rgba(255,255,255,0.9));
+  transition: opacity 200ms ease, stroke-width 150ms ease, stroke 150ms ease;
 }
 
 .rel-line:hover {
   opacity: 1;
-  stroke-width: 3;
+  stroke-width: 3.5;
   stroke: var(--color-accent);
 }
 
@@ -2296,6 +2298,79 @@ strong {
 .modal__details dd {
   color: var(--color-text-primary);
   margin: 0;
+}
+
+.modal__rel-header {
+  grid-column: 1 / -1 !important;
+  margin-block-start: var(--space-4);
+  padding-block-start: var(--space-3);
+  border-top: 1px dashed var(--color-border);
+  color: var(--color-accent) !important;
+  font-weight: 700 !important;
+}
+
+.modal__rels {
+  grid-column: 1 / -1 !important;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.modal__rel-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-right: 3px solid #C9A96E;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family);
+  font-size: var(--font-size-small);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  text-align: start;
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.modal__rel-chip:hover {
+  background: var(--color-surface);
+  border-color: var(--color-accent);
+  transform: translateX(-3px);
+}
+
+.rel-chip__type {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.rel-chip__with {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+
+.modal__back-wrap {
+  grid-column: 1 / -1 !important;
+  margin-block-start: var(--space-4);
+}
+
+.modal__back {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-accent);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: var(--font-size-small);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.modal__back:hover {
+  background: var(--color-surface-alt);
+  border-color: var(--color-accent);
 }
 
 .visually-hidden {
