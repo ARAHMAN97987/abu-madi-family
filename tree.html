@@ -51,66 +51,52 @@
 <main id="main-content" class="tree-main">
   <header class="tree-header">
     <h1>شجرة عائلة آل أبو ماضي</h1>
-    <p>الطنطورة وإجزم، قضاء حيفا — خمسة أجيال، فرعا وصفي وعمر وحيد.</p>
+    <p>الطنطورة وإجزم، قضاء حيفا — سبعة أجيال، فرعا وصفي وعمر وحيد، وفرع آل عشماوي عبر وحيدة.</p>
+    <div class="tree-stats">
+      <span><strong id="stat-total">0</strong> فرد</span>
+      <span><strong id="stat-gens">7</strong> أجيال</span>
+      <span><strong id="stat-branches">3</strong> فروع</span>
+    </div>
   </header>
-
-  <div class="tree-toolbar">
-    <div class="tree-toolbar__group">
-      <label for="tree-search" class="visually-hidden">بحث</label>
-      <input type="search" id="tree-search" class="tree-search" placeholder="ابحث عن اسم..." autocomplete="off">
-    </div>
-    <div class="tree-toolbar__group">
-      <button type="button" class="tree-filter active" data-branch="all">الكل</button>
-      <button type="button" class="tree-filter" data-branch="وصفي">فرع وصفي</button>
-      <button type="button" class="tree-filter" data-branch="عمر وحيد">فرع عمر وحيد</button>
-    </div>
-    <div class="tree-toolbar__group">
-      <button type="button" class="tree-filter" id="expand-all">افتح الكل</button>
-      <button type="button" class="tree-filter" id="collapse-all">اطوِ الكل</button>
-      <button type="button" class="tree-filter active" id="toggle-rels">إخفاء العلاقات</button>
-    </div>
-    <div class="tree-toolbar__group">
-      <button type="button" class="tree-zoom" id="zoom-in" aria-label="تكبير">+</button>
-      <button type="button" class="tree-zoom" id="zoom-out" aria-label="تصغير">−</button>
-      <button type="button" class="tree-zoom" id="zoom-reset" aria-label="إعادة">↺</button>
-    </div>
-    <div class="tree-toolbar__group">
-      <button type="button" class="btn btn--secondary tree-edit-btn" id="export-html">تصدير الشجرة</button>
-      <a href="dashboard.html" class="btn btn--secondary tree-edit-btn">تعديل الشجرة</a>
-    </div>
-  </div>
-
-  <div class="tree-stats">
-    <span><strong id="stat-total">0</strong> فرد</span>
-    <span><strong id="stat-gens">5</strong> أجيال</span>
-    <span><strong id="stat-branches">2</strong> فرعان</span>
-  </div>
 
   <div class="tree-container" id="tree-container">
     <div class="tree-loading">جاري تحميل الشجرة...</div>
+
+    <div class="tree-toolbar">
+      <div class="tree-toolbar__group">
+        <label for="tree-search" class="visually-hidden">بحث</label>
+        <input type="search" id="tree-search" class="tree-search" placeholder="ابحث عن اسم..." autocomplete="off">
+      </div>
+      <div class="tree-toolbar__group">
+        <button type="button" class="tree-filter active" data-branch="all">الكل</button>
+        <button type="button" class="tree-filter" data-branch="وصفي">وصفي</button>
+        <button type="button" class="tree-filter" data-branch="عمر وحيد">عمر وحيد</button>
+      </div>
+      <div class="tree-toolbar__group">
+        <button type="button" class="tree-filter" id="expand-all">افتح الكل</button>
+        <button type="button" class="tree-filter" id="collapse-all">اطوِ الكل</button>
+        <button type="button" class="tree-filter active" id="toggle-rels">إخفاء العلاقات</button>
+      </div>
+      <div class="tree-toolbar__group">
+        <button type="button" class="tree-zoom" id="zoom-in" aria-label="تكبير">+</button>
+        <button type="button" class="tree-zoom" id="zoom-out" aria-label="تصغير">−</button>
+        <button type="button" class="tree-zoom" id="zoom-reset" aria-label="إعادة">↺</button>
+      </div>
+      <div class="tree-toolbar__group">
+        <button type="button" class="btn btn--secondary tree-edit-btn" id="export-html">تصدير</button>
+        <a href="dashboard.html" class="btn btn--secondary tree-edit-btn">تعديل</a>
+      </div>
+    </div>
+
     <svg class="tree-svg" aria-label="شجرة عائلة آل أبو ماضي"></svg>
-  </div>
 
-  <div class="tree-legend">
-    <div class="tree-legend__item">
-      <span class="tree-legend__swatch" style="background:#8B6F47"></span>
-      <span>الجد الأكبر / المشترك</span>
-    </div>
-    <div class="tree-legend__item">
-      <span class="tree-legend__swatch" style="background:#5E7A5C"></span>
-      <span>فرع وصفي</span>
-    </div>
-    <div class="tree-legend__item">
-      <span class="tree-legend__swatch" style="background:#7A5C4A"></span>
-      <span>فرع عمر وحيد</span>
-    </div>
-    <div class="tree-legend__item">
-      <span class="tree-legend__swatch tree-legend__swatch--ext"></span>
-      <span>أبناء بناتٍ من خارج العائلة</span>
+    <div class="tree-legend">
+      <div class="tree-legend__item"><span class="tree-legend__swatch" style="background:#8B6F47"></span><span>الجد المشترك</span></div>
+      <div class="tree-legend__item"><span class="tree-legend__swatch" style="background:#5E7A5C"></span><span>فرع وصفي</span></div>
+      <div class="tree-legend__item"><span class="tree-legend__swatch" style="background:#7A5C4A"></span><span>فرع عمر وحيد</span></div>
+      <div class="tree-legend__item"><span class="tree-legend__swatch" style="background:#94735A"></span><span>عشماوي</span></div>
     </div>
   </div>
-
-  <p class="tree-help">اضغط على أي اسم لرؤية التفاصيل. اسحب الشجرة للتنقل، أو استخدم عجلة الفأرة للتكبير.</p>
 </main>
 
 <div class="modal" id="person-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" hidden>
