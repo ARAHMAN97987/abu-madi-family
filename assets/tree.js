@@ -345,11 +345,13 @@
 
   function setStats() {
     let count = 0, branches = new Set(), gens = new Set();
-    root.each(function (d) {
+    function walk(n) {
       count++;
-      if (d.data.branch && !['الجد الأكبر','الجد المشترك'].includes(d.data.branch)) branches.add(d.data.branch);
-      if (d.data.gen) gens.add(d.data.gen);
-    });
+      if (n.branch && !['الجد الأكبر','الجد المشترك'].includes(n.branch)) branches.add(n.branch);
+      if (n.gen) gens.add(n.gen);
+      (n.children || []).forEach(walk);
+    }
+    walk(rootData);
     document.getElementById('stat-total').textContent = count;
     document.getElementById('stat-gens').textContent = gens.size;
     document.getElementById('stat-branches').textContent = branches.size;
@@ -712,6 +714,18 @@ body {
     if (p.gen && p.gen !== '0') sub.push(generationLabel({ data: p }));
     if (p.branch && !['الجد الأكبر','الجد المشترك'].includes(p.branch)) sub.push('فرع ' + p.branch);
     document.getElementById('modal-subtitle').textContent = sub.join(' — ');
+
+    // Photo
+    const modalContent = document.querySelector('#person-modal .modal__content');
+    let oldPhoto = modalContent.querySelector('.person-photo');
+    if (oldPhoto) oldPhoto.remove();
+    if (p.photo) {
+      const photoEl = document.createElement('img');
+      photoEl.className = 'person-photo';
+      photoEl.src = p.photo;
+      photoEl.alt = p.name;
+      modalContent.insertBefore(photoEl, document.getElementById('modal-name'));
+    }
 
     const dl = document.getElementById('modal-details');
     dl.innerHTML = '';

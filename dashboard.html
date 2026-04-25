@@ -108,6 +108,21 @@
     <button type="button" class="modal__close" data-modal-close>×</button>
     <h2 class="modal__name" id="person-modal-title">إضافة فرد</h2>
     <form class="form-grid" id="person-form">
+      <div class="form-grid__field form-grid__field--full photo-field">
+        <label>صورة الفرد</label>
+        <div class="photo-uploader">
+          <div class="photo-preview" id="p-photo-preview">
+            <span class="photo-preview__placeholder">لا توجد صورة</span>
+          </div>
+          <div class="photo-actions">
+            <input type="file" id="p-photo-input" accept="image/*" hidden>
+            <button type="button" class="btn btn--secondary" id="p-photo-pick">اختر صورة</button>
+            <button type="button" class="btn btn--secondary" id="p-photo-remove">حذف</button>
+          </div>
+          <input type="hidden" id="p-photo">
+        </div>
+        <small class="form-hint">الصورة سيُعاد تحجيمها إلى 320×320 لتقليل الحجم.</small>
+      </div>
       <div class="form-grid__field form-grid__field--full">
         <label for="p-name">الاسم الكامل <span class="required">*</span></label>
         <input type="text" id="p-name" required>

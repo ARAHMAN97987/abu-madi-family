@@ -136,6 +136,10 @@
     document.getElementById('person-form').addEventListener('submit', savePerson);
     document.getElementById('rel-form').addEventListener('submit', saveRel);
 
+    document.getElementById('p-photo-pick').addEventListener('click', () => document.getElementById('p-photo-input').click());
+    document.getElementById('p-photo-input').addEventListener('change', handlePhotoPick);
+    document.getElementById('p-photo-remove').addEventListener('click', clearPhoto);
+
     document.querySelectorAll('[data-modal-close]').forEach(el => {
       el.addEventListener('click', closeModals);
     });
@@ -233,6 +237,7 @@
     document.getElementById('person-modal-title').textContent = id ? 'تعديل فرد' : 'إضافة فرد';
     const f = document.getElementById('person-form');
     f.reset();
+    setPhotoPreview('');
     populateParentSelect();
     if (id) {
       const p = getAllPeople().find(x => x.id === id);
@@ -249,10 +254,66 @@
         document.getElementById('p-location').value = p.location || '';
         document.getElementById('p-occupation').value = p.occupation || '';
         document.getElementById('p-notes').value = p.notes || '';
+        document.getElementById('p-photo').value = p.photo || '';
+        setPhotoPreview(p.photo || '');
       }
     }
     document.getElementById('person-modal').hidden = false;
     document.body.style.overflow = 'hidden';
+  }
+
+  function setPhotoPreview(src) {
+    const wrap = document.getElementById('p-photo-preview');
+    wrap.innerHTML = '';
+    if (src) {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'صورة الفرد';
+      wrap.appendChild(img);
+    } else {
+      const span = document.createElement('span');
+      span.className = 'photo-preview__placeholder';
+      span.textContent = 'لا توجد صورة';
+      wrap.appendChild(span);
+    }
+  }
+
+  function clearPhoto() {
+    document.getElementById('p-photo').value = '';
+    document.getElementById('p-photo-input').value = '';
+    setPhotoPreview('');
+  }
+
+  function handlePhotoPick(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { alert('نوع ملف غير صالح'); return; }
+    const reader = new FileReader();
+    reader.onload = function () {
+      const img = new Image();
+      img.onload = function () {
+        const dataUrl = compressImage(img, 320);
+        document.getElementById('p-photo').value = dataUrl;
+        setPhotoPreview(dataUrl);
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  }
+
+  function compressImage(img, maxSize) {
+    let { width, height } = img;
+    const ratio = Math.min(maxSize / width, maxSize / height, 1);
+    width = Math.round(width * ratio);
+    height = Math.round(height * ratio);
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL('image/jpeg', 0.82);
   }
 
   function savePerson(e) {
@@ -270,6 +331,7 @@
       location: document.getElementById('p-location').value.trim(),
       occupation: document.getElementById('p-occupation').value.trim(),
       notes: document.getElementById('p-notes').value.trim(),
+      photo: document.getElementById('p-photo').value || '',
     };
     if (!data.name) return;
 
