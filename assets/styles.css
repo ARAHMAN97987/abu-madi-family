@@ -1265,6 +1265,14 @@ strong {
   background-position: center;
 }
 
+.proof-list__cite {
+  display: block;
+  font-size: var(--font-size-caption);
+  color: var(--color-text-secondary);
+  margin-block-start: var(--space-1);
+  font-style: italic;
+}
+
 /* ============================================================
    SOURCES GRID (4 categorized groups)
    ============================================================ */
